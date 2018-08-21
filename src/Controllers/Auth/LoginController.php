@@ -38,7 +38,6 @@ class LoginController extends Controller
 
      public function username()
     {
-        // debug_print_backtrace();
         return 'mobile';
     }
 

@@ -13,7 +13,7 @@
         <form class="d-form-group was-validated" method="POST">
             @csrf
             <div class="form-group">
-                <input class="form-control is-invalid" type="tel" name="mobile" id="mobile" aria-describedby="mobileHelp" placeholder="موبایل">
+            <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="tel" name="mobile" id="mobile" aria-describedby="mobileHelp" placeholder="موبایل">
                 <label for="mobile" data-toggle="tooltip" data-placement="auto" title="موبایل">
                     <i class="fas fa-mobile-alt"></i>
                 </label>
@@ -24,7 +24,7 @@
             </div>
 
             <div class="form-group">
-                <input class="form-control is-invalid" type="password" name="password" id="password" placeholder="کلمه‌ی عبور">
+                <input class="form-control {{ $errors->has('password') ? 'is-invalid' : '' }}" type="password" name="password" id="password" placeholder="کلمه‌ی عبور">
                 <label for="password" data-toggle="tooltip" data-placement="auto" title="کلمه‌ی عبور">
                     <i class="fas fa-shield-alt"></i>
                 </label>
