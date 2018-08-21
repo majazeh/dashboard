@@ -1,0 +1,28 @@
+{
+    "name": "majazeh/dahsio",
+    "description": "Majazeh dashboard",
+    "license": "MIT",
+    "authors": [
+    {
+        "name": "baravak",
+        "email": "itb.baravak@gmail.com"
+    }],
+    "autoload":
+    {
+        "psr-4":
+        {
+            "Majazeh\\Dashboard\\": "src/"
+        }
+    },
+    "extra":
+    {
+        "laravel":
+        {
+            "providers": [
+                "Majazeh\\Dashboard\\MajazehDashboardProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
