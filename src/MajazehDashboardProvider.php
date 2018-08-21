@@ -14,6 +14,8 @@ class MajazehDashboardProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->publishes([__DIR__ . "/assets" => public_path('/')]);
+
         require __DIR__.'/routes/web.php';
         $this->loadMigrationsFrom(__DIR__.'/migrations');
         View::addLocation(__DIR__.'/views');
