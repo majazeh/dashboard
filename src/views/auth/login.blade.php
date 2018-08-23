@@ -31,13 +31,14 @@
                     <div class="invalid-feedback">{{ $errors->first('password') }}</div>
                 @endif
             </div>
-
             <div>
                 <button type="submit" class="btn btn-gradient btn-rounded btn-block btn-enter fs-medium font-weight-xlight">ورود / ‌ثبت‌ نام</button>
-                <a class="btn btn-block btn-rounded btn-block btn-enter btn-google fs-medium font-weight-xlight" href="#">
-                    <span>ورود با گوگل</span>
-                    <img src="/images/google.svg" alt="Google" width="18">
-                </a>
+                @if (config('services.google.client_id'))
+                    <a class="btn btn-block btn-rounded btn-block btn-enter btn-google fs-medium font-weight-xlight" href="#">
+                        <span>ورود با گوگل</span>
+                        <img src="/images/google.svg" alt="Google" width="18">
+                    </a>
+                @endif
             </div>
         </form>
 
