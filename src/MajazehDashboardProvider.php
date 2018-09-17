@@ -1,9 +1,11 @@
 <?php
 
 namespace Majazeh\Dashboard;
+
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Foundation\AliasLoader;
 
 class MajazehDashboardProvider extends ServiceProvider
 {
@@ -17,6 +19,10 @@ class MajazehDashboardProvider extends ServiceProvider
         $this->publishes([__DIR__ . "/assets" => public_path('/')]);
 
         require __DIR__.'/routes/web.php';
+        if(file_exists(base_path('routes/dashboard.php')))
+        {
+            require base_path('routes/dashboard.php');
+        }
         $this->loadMigrationsFrom(__DIR__.'/migrations');
         View::addLocation(__DIR__.'/views');
         $this->loadTranslationsFrom( __DIR__.'/lang', 'dashio');
@@ -29,5 +35,9 @@ class MajazehDashboardProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->booting(function() {
+            $loader = AliasLoader::getInstance();
+            $loader->alias('Data', Controllers\Data::class);
+        });
     }
 }

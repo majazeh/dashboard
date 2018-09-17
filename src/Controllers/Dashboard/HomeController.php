@@ -3,7 +3,7 @@
 namespace Majazeh\Dashboard\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use Majazeh\Dashboard\Controllers\Controller;
 
 class HomeController extends Controller
 {
@@ -14,7 +14,6 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
     }
 
     /**
@@ -22,8 +21,8 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
+        return $this->view('dashboard.home');
     }
 }

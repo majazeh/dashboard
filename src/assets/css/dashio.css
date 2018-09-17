@@ -566,6 +566,8 @@ body[data-page="login"], body[data-page="register"] {
       line-height: 2.075rem; }
     .desktop .text {
       font-size: .75rem; } }
+  .desktop [data-desktop]:not(.active) {
+    display: none; }
 
 .desktop.active,
 .branding.active {
@@ -606,7 +608,8 @@ body[data-page="login"], body[data-page="register"] {
   overflow: hidden;
   min-height: 100vh;
   margin-left: 0;
-  background-color: #f9f9f9; }
+  background-color: #f9f9f9;
+  background-color: #fff; }
 
 .rtl .content {
   margin-right: 0;
@@ -837,21 +840,23 @@ body[data-page="login"], body[data-page="register"] {
 
 .page-head {
   border-radius: 3px;
-  background-color: #efefef;
+  background-color: #e6e6e6;
   overflow: hidden;
-  min-height: 60px;
-  border: 1px solid #e3e3e3; }
+  min-height: 50px;
+  border: 2px dashed #bbb;
+  -webkit-box-shadow: 0 0 0 5px #e6e6e6;
+  box-shadow: 0 0 0 5px #e6e6e6; }
   .page-head .page-head-title {
     font-size: 1.225rem;
     font-weight: 700; }
     @media (min-width: 576px) {
       .page-head .page-head-title {
-        font-size: 1.425rem; } }
+        font-size: 1.25rem; } }
 
 .page-head-icon {
-  font-size: 24px;
+  font-size: 1.5rem;
   background-color: rgba(0, 0, 0, 0.05);
-  min-width: 70px; }
+  min-width: 55px; }
 
 .page-head-text {
   font-size: .875rem;
@@ -876,25 +881,32 @@ body[data-page="login"], body[data-page="register"] {
     transition: all 0.15s ease-in-out; }
   .d-form .form-group .form-control {
     background: transparent;
-    border: 0;
-    border-bottom: 1px solid #aaa;
+    border: 1px solid #e0e0e0;
     border-radius: 0;
-    padding-right: 2.25rem;
+    padding: 1.5rem .75rem;
+    padding-right: 2.8rem;
     font-size: 0.875rem;
-    direction: ltr; }
+    direction: ltr;
+    color: #000;
+    font-weight: bold; }
     .d-form .form-group .form-control::-webkit-input-placeholder {
-      color: #aaa; }
+      color: #aaa;
+      font-weight: normal; }
     .d-form .form-group .form-control:-moz-placeholder {
-      color: #aaa; }
+      color: #aaa;
+      font-weight: normal; }
     .d-form .form-group .form-control::-moz-placeholder {
-      color: #aaa; }
+      color: #aaa;
+      font-weight: normal; }
     .d-form .form-group .form-control:-ms-input-placeholder {
-      color: #aaa; }
+      color: #aaa;
+      font-weight: normal; }
     .d-form .form-group .form-control::placeholder {
-      color: #aaa; }
+      color: #aaa;
+      font-weight: normal; }
     .d-form .form-group .form-control:focus {
+      background-color: #fff;
       color: #000;
-      border-bottom-color: #000;
       -webkit-box-shadow: none;
       box-shadow: none; }
       .d-form .form-group .form-control:focus + label {
@@ -1059,7 +1071,7 @@ body[data-page="login"], body[data-page="register"] {
 .rtl .d-form .form-group .form-control {
   direction: ltr;
   padding-right: .75rem;
-  padding-left: 2.25rem; }
+  padding-left: 2.8rem; }
   .rtl .d-form .form-group .form-control::-webkit-input-placeholder {
     direction: rtl; }
   .rtl .d-form .form-group .form-control:-moz-placeholder {
@@ -1128,11 +1140,13 @@ body[data-page="login"], body[data-page="register"] {
   font-family: 'Font Awesome 5 Free'; }
 
 .wrapper {
-  border: 2px dashed #e5e5e5;
+  border: 2px dashed #bbb;
   border-radius: 3px;
-  background-color: #f7f7f7;
+  background-color: #f5f5f5;
   position: relative;
-  padding: 1rem; }
+  padding: 1rem;
+  -webkit-box-shadow: 0 0 0 10px #f5f5f5;
+  box-shadow: 0 0 0 10px #f5f5f5; }
   .wrapper h3 {
     font-size: 1.2rem;
     font-weight: 600; }
@@ -1141,25 +1155,76 @@ body[data-page="login"], body[data-page="register"] {
     font-weight: 300; }
   @media (min-width: 576px) {
     .wrapper {
-      padding: 1.5rem; } }
+      padding: 1.5rem 3rem; } }
+  .wrapper.wrapper-primary {
+    border-color: #2f9ce6; }
+  .wrapper.wrapper-success {
+    border-color: #3cd3ad; }
 
 .wrapper-icon {
   position: absolute;
-  top: -10px;
-  left: -10px;
-  width: 2rem;
-  height: 2rem;
-  border: 2px dashed #e5e5e5;
+  top: -20px;
+  left: -20px;
+  width: 3rem;
+  height: 3rem;
+  border-width: 2px;
+  border-style: dashed;
+  border-color: inherit;
   border-radius: 50%;
   color: #222;
-  background-color: #f5f5f5; }
+  background-color: inherit;
+  -webkit-box-shadow: 0 0 0 10px #f5f5f5;
+  box-shadow: 0 0 0 10px #f5f5f5; }
   .wrapper-icon [class*="fa"] {
     position: relative;
     z-index: 1; }
 
+.wrapper-actions {
+  position: absolute;
+  bottom: -1rem;
+  width: 100%;
+  left: -20px;
+  text-align: left; }
+  .wrapper-actions .btn-action {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed #bbb;
+    -webkit-box-shadow: 0 0 0 10px #f5f5f5;
+    box-shadow: 0 0 0 10px #f5f5f5;
+    border-radius: 10rem;
+    margin: 0 5px;
+    background-color: #f5f5f5; }
+    .wrapper-actions .btn-action.btn-primary {
+      color: #007bff;
+      border-color: #007bff; }
+      .wrapper-actions .btn-action.btn-primary:focus, .wrapper-actions .btn-action.btn-primary:hover {
+        color: #fff;
+        background-color: #0062cc;
+        border-color: #005cbf; }
+      .wrapper-actions .btn-action.btn-primary:focus {
+        -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); }
+    .wrapper-actions .btn-action.btn-success {
+      color: #28a745;
+      border-color: #28a745; }
+      .wrapper-actions .btn-action.btn-success:focus, .wrapper-actions .btn-action.btn-success:hover {
+        color: #fff;
+        background-color: #1e7e34;
+        border-color: #1c7430; }
+      .wrapper-actions .btn-action.btn-success:focus {
+        -webkit-box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5);
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5); }
+    .wrapper-actions .btn-action .fa, .wrapper-actions .btn-action .fas {
+      margin-right: .5rem; }
+
 .rtl .wrapper-icon {
-  right: -10px;
+  right: -20px;
   left: auto; }
+
+.rtl .wrapper-actions .btn-action .fa, .rtl .wrapper-actions .btn-action .fas {
+  margin-right: 0;
+  margin-left: .5rem; }
 
 .pagination-gradient .page-item .page-link {
   color: #2f9ce5; }

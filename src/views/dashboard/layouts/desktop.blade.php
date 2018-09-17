@@ -1,11 +1,12 @@
 <div id="desktop" class="d-none d-lg-block desktop justify-content-xl-center align-items-center align-items-sm-start">
     <div id="branding-title" class="branding branding-title d-none align-items-center px-3">
         <h2 class="text-white text-truncate mb-0">
-            <a class="text-white" href="{{ env('APP_URL') }}">{{ _d('title') }}</a>
+            <a class="text-white" href="{{ env('APP_URL') }}">{{ _d('title.dashio') }}</a>
         </h2>
     </div>
     <div class="desktop-content py-3 px-3 w-100">
-        <div class="d-flex flex-wrap flex-column align-content-center  justify-content-center mb-5">
+        <div class="d-flex flex-wrap flex-column align-content-center justify-content-center mb-5">
+            @section('desktop-rows')
             <div class="d-flex tile align-content-center justify-content-center">
                 <div class="d-flex flex-column justify-content-center align-items-center w-50">
                     <span class="number">۰</span>
@@ -86,6 +87,7 @@
                     </div>
                 </div>
             </div>
+            @show
         </div>
     </div>
 </div>

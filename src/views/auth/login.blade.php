@@ -13,12 +13,12 @@
         <form class="d-form mb-3" method="POST">
             @csrf
             <div class="form-group">
-            <input class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" type="tel" name="mobile" id="mobile" aria-describedby="mobileHelp" placeholder="موبایل">
-                <label for="mobile" data-toggle="tooltip" data-placement="auto" title="موبایل">
-                    <i class="fas fa-mobile-alt"></i>
+            <input class="form-control {{ $errors->hasAny(['username', 'email', 'mobile']) ? 'is-invalid' : '' }}" type="tel" name="username" id="username" aria-describedby="usernameHelp" placeholder="موبایل">
+                <label for="username" data-toggle="tooltip" data-placement="auto" title="موبایل">
+                    <i class="fas fa-username-alt"></i>
                 </label>
-                @if ($errors->has('mobile'))
-                    <div class="invalid-feedback">{{ $errors->first('mobile') }}</div>
+                @if ($errors->hasAny(['username', 'email', 'mobile']))
+                    <div class="invalid-feedback">{{ $errors->first('username') | $errors->first('email') | $errors->first('mobile') }}</div>
                 @endif
             </div>
 
@@ -32,9 +32,12 @@
                 @endif
             </div>
             <div>
+                @if (\Session::has('registerMsg'))
+                    <span>{{ \Session::get('registerMsg') }}</span>
+                @endif
                 <button type="submit" class="btn btn-gradient btn-rounded btn-block btn-enter fs-medium font-weight-xlight">ورود / ‌ثبت‌ نام</button>
                 @if (config('services.google.client_id'))
-                    <a class="btn btn-block btn-rounded btn-block btn-enter btn-google fs-medium font-weight-xlight" href="#">
+                    <a class="btn btn-block btn-rounded btn-block btn-enter btn-google fs-medium font-weight-xlight" href="/login/google">
                         <span>ورود با گوگل</span>
                         <img src="/images/google.svg" alt="Google" width="18">
                     </a>
