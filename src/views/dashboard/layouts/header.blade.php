@@ -8,4 +8,4 @@
 	<link rel="stylesheet" type="text/css" href="/css/dashio.min.css">
 @show
 
-<title>{{ $global->title or 'دشیو' }}</title>
+<title>{{ $global->title ?: _d('Dashio') }}</title>

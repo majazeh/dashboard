@@ -15,17 +15,10 @@ class LoginController extends AuthController
 	use AuthenticatesUsers;
 
 
-	public function __construct()
+	public function __construct(Request $request)
 	{
-        // Mail::send('emails.send', ['x' => 12], function ($message)
-        // {
-
-        //     $message->from('hamna.twitter@gmail.com', 'Hasan Salehi');
-
-        //     $message->to('itb.baravak@gmail.com');
-
-        // });
 		$this->middleware('guest')->except('logout');
+		parent::__construct($request);
 	}
 
 	/**
@@ -41,7 +34,7 @@ class LoginController extends AuthController
 	 */
 	public function showLoginForm()
 	{
-		return view('auth.login');
+		return $this->view('auth.login');
 	}
 
 	/**
