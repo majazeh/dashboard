@@ -9,7 +9,7 @@
     <div class="d-flex align-items-center px-3 page-head-body">
         <h2 class="mb-0 page-head-title">{{ $module->header }}</h2>
         <p class="d-none d-lg-block text-muted mb-0 page-head-text">
-            {{ $module->desc or '' }}
+            {{ $module->desc ?: '' }}
         </p>
     </div>
 </div>

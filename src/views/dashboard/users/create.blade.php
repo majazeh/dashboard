@@ -2,7 +2,7 @@
 
 @section('form')
 <div class="form-group">
-    <input class="form-control" type="text" name="name" id="name" placeholder="{{ _d('name') }}" value="{{ $user->name or '' }}">
+    <input class="form-control" type="text" name="name" id="name" placeholder="{{ _d('name') }}" value="{{ isset($user->name) ? $user->name : ''}}">
 
     <label for="name">
         <i class="fas fa-user-tag"></i>
@@ -10,7 +10,7 @@
 </div>
 
 <div class="form-group">
-    <input class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" type="text" name="username" id="username" placeholder="{{ _d('username') }}" value="{{ $user->username or '' }}">
+    <input class="form-control {{ $errors->has('username') ? 'is-invalid' : '' }}" type="text" name="username" id="username" placeholder="{{ _d('username') }}" value="{{ isset($user->username) ? $user->username : ''}}">
 
     <label for="username">
         <i class="fas fa-at"></i>
@@ -22,7 +22,7 @@
 </div>
 
 <div class="form-group">
-    <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" placeholder="{{ _d('email') }}" value="{{ $user->email or '' }}">
+    <input class="form-control {{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email" id="email" placeholder="{{ _d('email') }}" value="{{ isset($user->email) ? $user->email : ''}}">
 
     <label for="email">
         <i class="fas fa-envelope"></i>
@@ -34,7 +34,7 @@
 </div>
 
 <div class="form-group">
-    <input class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" type="tel" name="mobile" id="mobile" placeholder="{{ _d('mobile') }}" value="{{ $user->mobile or '' }}">
+    <input class="form-control {{ $errors->has('mobile') ? 'is-invalid' : '' }}" type="tel" name="mobile" id="mobile" placeholder="{{ _d('mobile') }}" value="{{ isset($user->mobile) ? $user->mobile : ''}}">
 
     <label for="mobile">
         <i class="fas fa-mobile-alt"></i>
