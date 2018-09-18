@@ -28,7 +28,7 @@ class Data
 			$key = lcfirst(substr($name, 3));
 			if(!isset(self::$Data[$key]) || !is_object(self::$Data[$key]))
 			{
-				self::$Data[$key] = (object) array();
+				self::$Data[$key] = new StdClass;
 			}
 			self::$Data[$key]->{$arguments[0]} = $arguments[1];
 		}
