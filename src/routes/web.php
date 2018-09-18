@@ -1,7 +1,4 @@
 <?php
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-// 	return $request->user();
-// });
 Route::group(['middleware' => ['web']], function () {
 	Route::get('/login', 'Majazeh\Dashboard\Controllers\Auth\LoginController@showLoginForm')->name('login');
 	Route::post('/login', 'Majazeh\Dashboard\Controllers\Auth\LoginController@login');
@@ -21,4 +18,11 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 	});
 });
 
+
+Route::group(['middleware' => 'api'], function(){
+	Route::prefix('/api')->group(function () {
+		Route::post('login', 'Majazeh\Dashboard\Controllers\API\UsersController@login');
+		Route::post('register', 'Majazeh\Dashboard\Controllers\API\UsersController@register');
+	});
+});
 ?>
