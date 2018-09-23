@@ -27,13 +27,13 @@ class Controller {
 
 	public function response($result, $data = [], $code = 200)
 	{
-		$response = is_array($result) ? $result : ['message' => is_string($result) ? $result : ':)'];
+		$response = ['is_ok' => true];
+		$response = is_array($result) ? array_merge($response, $result) : array_merge($response, ['message' => is_string($result) ? $result : ':)']);
 
 		if(is_object($result))
 		{
 			$response = array_merge($response, $result->toArray());
 		}
-		$response['is_ok'] = true;
 		if(!empty($data))
 		{
 			$response['data'] = $data;
@@ -115,6 +115,29 @@ class Controller {
 		return $this->response($this->get_model()::paginate());
 	}
 
+	public function paginate_order(Request $request, $model, $order_list = ['id'])
+	{
+		$keys = array_keys($order_list);
+		$order = $request->input('order') && in_array($request->input('order'), $keys) ? strtolower($request->input('order')) : 'id';
+		if(isset($order_list[$order]))
+		{
+			$order = $order_list[$order];
+		}
+		$sort = strtolower($request->input('sort')) == 'desc' ? 'desc' : 'asc';
+		if($order != 'id' || $sort != 'asc')
+		{
+			$model->orderBy($order, $sort);
+			$paginate = $model->paginate();
+	        $paginate->appends($request->all('order', 'sort'));
+			return $paginate;
+		}
+		else
+		{
+			return $model->paginate();
+		}
+
+	}
+
 	public function show(Request $request, $id)
 	{
 		$table = $this->findOrFail($id);
@@ -129,9 +152,12 @@ class Controller {
 		return $this->response($this->table . " deleted");
 	}
 
+	public function validated(Request $request, $id = null){}
+
 	public function store(Request $request)
 	{
 		$this->validator($request)->validate();
+		$this->validated($request);
 		$data = [];
 		foreach ($this->get_fields('keys', $request) as $key => $value) {
 			if($request->input($value))
@@ -147,6 +173,7 @@ class Controller {
 	{
 		$table = $this->findOrFail($id);
 		$this->validator($request, $table)->validate();
+		$this->validated($request, $table);
 		$original_all = $table->toArray();
 		foreach ($this->get_fields('inputs', $request, true) as $key => $value) {
 			$table->$key = $value;

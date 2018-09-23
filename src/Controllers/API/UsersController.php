@@ -33,6 +33,11 @@ class UsersController extends Controller{
 
 	public function register(Request $request)
 	{
+		$user = User::where('email', $request->input('username'))->first();
+		if($user)
+		{
+			return $this->response("user duplicated", null, 401);
+		}
 		$register = new User;
 		$register->password = Hash::make($request->input('password'));
 		$register->email = $request->input('username');
@@ -42,9 +47,15 @@ class UsersController extends Controller{
 		return $this->response("registered", $register);
 	}
 
+	public function me(Request $request)
+	{
+		return $this->response("me", \Auth::user());
+	}
+
 	public function logout(Request $request)
 	{
-		return [15];
+		$request->user('api')->token()->revoke();
+		return $this->response("logout successfuly");
 	}
 
 	public function username_method(Request $request)

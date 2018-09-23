@@ -23,6 +23,10 @@ Route::group(['middleware' => 'api'], function(){
 	Route::prefix('/api')->group(function () {
 		Route::post('login', 'Majazeh\Dashboard\Controllers\API\UsersController@login');
 		Route::post('register', 'Majazeh\Dashboard\Controllers\API\UsersController@register');
+		Route::group(['middleware' => ['auth:api']], function(){
+			Route::get('me', 'Majazeh\Dashboard\Controllers\API\UsersController@me');
+			Route::get('logout', 'Majazeh\Dashboard\Controllers\API\UsersController@logout');
+		});
 	});
 });
 ?>
