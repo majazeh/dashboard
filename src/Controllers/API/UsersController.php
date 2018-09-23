@@ -31,9 +31,20 @@ class UsersController extends Controller{
 		}
 	}
 
-	public function signup(Request $request)
+	public function register(Request $request)
 	{
+		$register = new User;
+		$register->password = Hash::make($request->input('password'));
+		$register->email = $request->input('username');
+		$register->status = 'active';
+		$register->type = 'user';
+		$register->save();
+		return $this->response("registered", $register);
+	}
 
+	public function logout(Request $request)
+	{
+		return [15];
 	}
 
 	public function username_method(Request $request)

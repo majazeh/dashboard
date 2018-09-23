@@ -46,7 +46,17 @@ class MajazehException extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($exception instanceof \Majazeh\Dashboard\MajazehJsonException)
+        {
+            return $exception->json_response;
+        }
+
+        if($exception instanceof \Illuminate\Validation\ValidationException)
+        {
+            return response()->json(['is_ok' => false, 'message' => 'VALIDATION_ERROR' , 'errors' => $exception->errors()], 401);
+        }
         return parent::render($request, $exception);
+        return response()->json(['is_ok' => false, 'error' => $exception], 500);
     }
     protected function unauthenticated($request, AuthenticationException $exception)
     {
