@@ -27,9 +27,8 @@ class Controller {
 
 	public function response($result, $data = [], $code = 200)
 	{
-		$response = ['is_ok' => true];
-		$response = is_array($result) ? array_merge($response, $result) : array_merge($response, ['message' => is_string($result) ? $result : ':)']);
-
+		$response = ['is_ok' => true, 'message' => ':)'];
+		$response = is_array($result) ? array_merge($response, $result) : array_merge($response, is_string($result) ? ['message' => $result] : $result);
 		if(is_object($result))
 		{
 			$response = array_merge($response, $result->toArray());
