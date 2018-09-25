@@ -14,10 +14,6 @@ class Controller {
 
 	public function __construct()
 	{
-		\App::singleton(
-			\Illuminate\Contracts\Debug\ExceptionHandler::class,
-			\Majazeh\Dashboard\MajazehException::class
-		);
 		if(!isset($this->table))
 		{
 			preg_match("#\\\([^\\\]*[^s])s?Controller$#", get_class($this), $model_name);

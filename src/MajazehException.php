@@ -55,8 +55,22 @@ class MajazehException extends ExceptionHandler
         {
             return response()->json(['is_ok' => false, 'message' => 'VALIDATION_ERROR' , 'errors' => $exception->errors()], 401);
         }
-        return parent::render($request, $exception);
-        return response()->json(['is_ok' => false, 'error' => $exception], 500);
+        if($exception instanceof \Symfony\Component\Debug\Exception\FatalThrowableError)
+        {
+            if(env('APP_DEBUG', false))
+            {
+                return response()->json([
+                    'is_ok' => false,
+                    'message' => $exception->getMessage(),
+                    'file' => $exception->getFile(),
+                    'line' => $exception->getLine(),
+                ], 500);
+            }
+            else
+            {
+            return response()->json(['is_ok' => false, 'message' => 'INTERNALL_ERROR'], 500);
+            }
+        }
     }
     protected function unauthenticated($request, AuthenticationException $exception)
     {

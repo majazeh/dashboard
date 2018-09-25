@@ -26,6 +26,10 @@ class MajazehDashboardProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/migrations');
         View::addLocation(__DIR__.'/views');
         $this->loadTranslationsFrom( __DIR__.'/lang', 'dashio');
+        $this->app->bind(
+            \Illuminate\Contracts\Debug\ExceptionHandler::class,
+            MajazehException::class
+        );
     }
 
     /**
