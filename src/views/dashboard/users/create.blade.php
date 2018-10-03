@@ -58,10 +58,11 @@
     @endif
 </div>
 
-<div class="radio tick">
+<div class="radio tick mb-3">
     <label>
         {{ _d('account.status') }}
     </label>
+
     @foreach ($userStatus as $type => $value)
     <div class="custom-control custom-radio">
         @isset ($user)
@@ -76,7 +77,7 @@
     @endforeach
 </div>
 
-<div class="radio tick">
+<div class="radio tick mb-3">
     <label>
         {{ _d('gender') }}
     </label>

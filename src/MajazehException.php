@@ -68,8 +68,26 @@ class MajazehException extends ExceptionHandler
             }
             else
             {
-            return response()->json(['is_ok' => false, 'message' => 'INTERNALL_ERROR'], 500);
+                return response()->json(['is_ok' => false, 'message' => 'INTERNALL_ERROR'], 500);
             }
+        }
+
+        if(method_exists($exception, 'getMessage'))
+        {
+            $message = $exception->getMessage();
+            $status = method_exists($exception, 'getStatusCode') ? $exception->getStatusCode() : 500;
+            if(!$message)
+            {
+                switch ($status) {
+                    case 404:
+                        $message = "NOT_FOUND";
+                        break;
+                    case 500 :
+                        $message = "INTERNALL_ERROR";
+                    break;
+                }
+            }
+            return response()->json(['is_ok' => false, 'message' => $message], $status);
         }
     }
     protected function unauthenticated($request, AuthenticationException $exception)

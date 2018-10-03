@@ -15,7 +15,7 @@
             <div class="form-group">
             <input class="form-control {{ $errors->hasAny(['username', 'email', 'mobile']) ? 'is-invalid' : '' }}" type="tel" name="username" id="username" aria-describedby="usernameHelp" placeholder="موبایل">
                 <label for="username" data-toggle="tooltip" data-placement="auto" title="موبایل">
-                    <i class="fas fa-username-alt"></i>
+                    <i class="fas fa-user"></i>
                 </label>
                 @if ($errors->hasAny(['username', 'email', 'mobile']))
                     <div class="invalid-feedback">{{ $errors->first('username') | $errors->first('email') | $errors->first('mobile') }}</div>
