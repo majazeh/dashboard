@@ -42,4 +42,27 @@ class Controller extends BaseController
         }
         return view($name, \Data::all());
     }
+
+    public function API($class, $method, ...$arguments)
+    {
+        $corridor = new $class;
+        $run = call_user_func_array([new $class, $method], $arguments);
+        $data = $run->getData();
+        if(isset($data->current_page))
+        {
+         $paginate = new \Illuminate\Pagination\LengthAwarePaginator(
+            $data->data,
+            $data->total,
+            $data->per_page,
+            $data->current_page,
+            array('path' => $data->path)
+        );
+         $cls = new \stdClass;
+         $cls->is_ok = $data->is_ok;
+         $cls->message = $data->message;
+         $cls->data = $paginate;
+         return $cls;
+     }
+     return $data;
+ }
 }
