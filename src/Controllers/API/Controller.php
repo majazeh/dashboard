@@ -24,12 +24,18 @@ class Controller {
 	public function response($result, $data = [], $code = 200)
 	{
 		$response = ['is_ok' => true, 'message' => ':)'];
-		$result = is_object($result) ? $result->toArray() : $result;
-		$response = is_array($result) ? array_merge($response, $result) : array_merge($response, ['message' => $result]);
+		$object_result = null;
 		if(is_object($result))
 		{
-			$response = array_merge($response, $result->toArray());
+			$object_result = $result;
+			$result = $result->toArray();
 		}
+		elseif(is_object($data))
+		{
+			$object_result = $data;
+			$data = $data->toArray();
+		}
+		$response = is_array($result) ? array_merge($response, $result) : array_merge($response, ['message' => $result]);
 		if(!empty($data))
 		{
 			$response['data'] = $data;
@@ -39,7 +45,9 @@ class Controller {
 		{
 			$response['is_ok'] = false;
 		}
-		return response()->json($response, $code);
+		$json = response()->json($response, $code);
+		$json->object_result = $object_result;
+		return $json;
 	}
 
 	public function get_model()
@@ -137,7 +145,7 @@ class Controller {
 	public function show(Request $request, $id)
 	{
 		$table = $this->findOrFail($id);
-		return $this->response("show successfully", $table->toArray());
+		return $this->response("show successfully", $table);
 	}
 
 
@@ -162,7 +170,7 @@ class Controller {
 			}
 		}
 		$create = $this->get_model()::create($data);
-		return $this->response($this->table . " created successfully", $create->toArray());
+		return $this->response($this->table . " created successfully", $create);
 	}
 
 	public function update(Request $request, $id)
