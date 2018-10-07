@@ -4,7 +4,7 @@
             <i class="{{ $module->icon }}"></i>
         </div>
 
-        <form method="POST" action="{{ $module->post_action ?: route($module->resource . ($module->action == 'edit' ? '.update' : '.store'), isset($id) ? $id : null) }}" class="d-form">
+        <form method="POST" {!! isset($multipart) ? 'enctype="multipart/form-data"' : '' !!} action="{{ $module->post_action ?: route($module->resource . ($module->action == 'edit' ? '.update' : '.store'), isset($id) ? $id : null) }}" class="d-form">
             @csrf
             @if ($module->action == 'edit')
                 @method('PUT')

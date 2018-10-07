@@ -4,7 +4,6 @@ namespace Majazeh\Dashboard;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Lang;
 use Illuminate\Foundation\AliasLoader;
 
 class MajazehDashboardProvider extends ServiceProvider
@@ -26,7 +25,7 @@ class MajazehDashboardProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/migrations');
         View::addLocation(__DIR__.'/views');
         $this->loadTranslationsFrom( __DIR__.'/lang', 'dashio');
-        if(\Request::segment(1))
+        if(\Request::segment(1) == 'api')
         {
             $this->app->bind(
                 \Illuminate\Contracts\Debug\ExceptionHandler::class,

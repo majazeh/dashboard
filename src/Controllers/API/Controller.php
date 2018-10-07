@@ -24,7 +24,7 @@ class Controller {
 	public function response($result, $data = [], $code = 200)
 	{
 		$response = ['is_ok' => true, 'message' => ':)'];
-		$object_result = null;
+		$object_result = $data;
 		if(is_object($result))
 		{
 			$object_result = $result;
@@ -121,24 +121,21 @@ class Controller {
 
 	public function paginate_order(Request $request, $model, $order_list = ['id'])
 	{
+		\DB::enableQueryLog();
 		$keys = array_keys($order_list);
 		$order = $request->input('order') && in_array($request->input('order'), $keys) ? strtolower($request->input('order')) : 'id';
 		if(isset($order_list[$order]))
 		{
 			$order = $order_list[$order];
 		}
-		$sort = strtolower($request->input('sort')) == 'desc' ? 'desc' : 'asc';
-		if($order != 'id' || $sort != 'asc')
+		$sort = strtolower($request->input('sort')) == 'asc' ? 'asc' : 'desc';
+		$model->orderBy($order, $sort);
+		$paginate = $model->paginate();
+		if($order != 'id' || $sort != 'desc')
 		{
-			$model->orderBy($order, $sort);
-			$paginate = $model->paginate();
 	        $paginate->appends($request->all('order', 'sort'));
-			return $paginate;
 		}
-		else
-		{
-			return $model->paginate();
-		}
+		return $paginate;
 
 	}
 

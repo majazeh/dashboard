@@ -1,7 +1,7 @@
 <nav id="menu" class="d-none d-sm-flex flex-wrap flex-sm-nowrap flex-sm-column align-items-stretch menu menu-optional">
     <div id="branding-logo" class="d-none d-sm-flex align-items-center justify-content-center branding branding-logo">
         <a class="branding-logo-img" href="{{ env('APP_URL') }}">
-			<img src="{{ env('APP_LOGO_50') }}" alt="cube" width="50" height="50">
+			<img src="{{ env('APP_LOGO_50', asset('images/logo/logo-50.png')) }}" alt="cube" width="50" height="50">
 		</a>
     </div>
 	@section('menu-itmes')
