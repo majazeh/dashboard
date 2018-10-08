@@ -34,11 +34,21 @@ class Controller extends BaseController
     public function view($name)
     {
         \Data::setLayouts('mod', 'html');
-        if(request()->ajax() && request()->header('accept') !== 'application/json')
+        if(request()->ajax() && !strstr(request()->header('accept'), 'application/json'))
         {
+            echo request()->header('accept');
             echo json_encode(\Data::get('global') ?: (object) [])."\n";
             \Data::setLayouts('mod', 'xhr');
             $name =  \View::exists("$name-xhr") ? "$name-xhr" : $name;
+        }
+        elseif(strstr(request()->header('accept'), 'application/json'))
+        {
+            if(method_exists($this, 'toArray'))
+            {
+                $response = $this->toArray();
+                if(gettype($response) != 'null' && $response !== false) return $response;
+            }
+            return \Data::all();
         }
         return view($name, \Data::all());
     }

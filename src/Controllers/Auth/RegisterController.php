@@ -92,7 +92,7 @@ class RegisterController extends AuthController
             \Session::flash('registerMsg', 'Check your email!');
             \Mail::send('emails.emailVerify', ['email' => $username, 'token' => $token], function ($message) use ($username)
             {
-                $message->from('hamna.twitter@gmail.com', 'Hasan Salehi');
+                $message->from(env('MAIL_USERNAME'), 'Hasan Salehi');
                 $message->to($username);
             });
         }
