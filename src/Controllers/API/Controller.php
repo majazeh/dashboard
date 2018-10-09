@@ -96,7 +96,7 @@ class Controller {
 
 	public function findOrFail($id, $model_name = null)
 	{
-		$model = $model_name ? '\App\\' . $model_name : $this->get_model();
+		$model = $model_name ? '\App\\' . (is_string($model_name) ? $model_name : $model_name->getModel()->getTable()) : $this->get_model();
 		$model_name = $model_name ?: $this->table;
 		if(is_null($id))
 		{
@@ -104,12 +104,20 @@ class Controller {
 		}
 		if(is_string($id) || is_int($id))
 		{
+			if($model_name instanceof \Illuminate\Database\Eloquent\Builder)
+			{
+				return $model_name->find($id) ?: $this->notFound(substr($model_name->getModel()->getTable(), 0, -1) . " not found");
+			}
 			$table = $model::find($id);
 			if(!$table)
 			{
 				return $this->notFound($model_name . " not found");
 			}
 			return $table;
+		}
+		if($id instanceof \Illuminate\Database\Eloquent\Builder)
+		{
+			return $id->first() ?: $this->notFound(substr($id->getModel()->getTable(), 0, -1) . " not found");
 		}
 		return $id;
 	}
@@ -190,6 +198,19 @@ class Controller {
 			'changed' => empty($changed) ? null : $changed,
 			'new' => $table->toArray()
 		]);
+	}
+
+	public function id()
+	{
+		if(\Auth::id())
+		{
+			return \Auth::id();
+		}
+		elseif($request->user('api'))
+		{
+			return $request->user('api')->id;
+		}
+		return null;
 	}
 }
 ?>
