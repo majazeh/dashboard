@@ -200,7 +200,7 @@ class Controller {
 		]);
 	}
 
-	public function id()
+	public function id($request)
 	{
 		if(\Auth::id())
 		{
