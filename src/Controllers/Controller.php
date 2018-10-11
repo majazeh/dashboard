@@ -36,8 +36,6 @@ class Controller extends BaseController
         \Data::setLayouts('mod', 'html');
         if(request()->ajax() && !strstr(request()->header('accept'), 'application/json'))
         {
-            echo request()->header('accept');
-            echo json_encode(\Data::get('global') ?: (object) [])."\n";
             \Data::setLayouts('mod', 'xhr');
             $name =  \View::exists("$name-xhr") ? "$name-xhr" : $name;
         }
