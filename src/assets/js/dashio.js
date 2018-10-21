@@ -1,4 +1,22 @@
 (function () {
+    function jresp(context, res) {
+        context.trigger('jresp', [res]);
+        if (res.message) {
+            iziToast[res.is_ok ? 'success' : 'error']({ message: res.message });
+        }
+        if (res.redirect) {
+            if (res.direct) {
+                location.href = res.redirect;
+            } else {
+                new Statio({
+                    url: res.redirect
+                });
+            }
+        }
+    }
+    window.JResp = jresp;
+})();
+(function () {
     var _globals = {
         title: function (value) {
             $('title').html(value);
@@ -96,6 +114,7 @@
                 response.data = jqXHR.responseJSON;
                 $(document).trigger('statio:global:jsonResponse', [options.context, jqXHR.responseJSON, jqXHR]);
                 options.context.trigger('statio:jsonResponse', [jqXHR.responseJSON, jqXHR]);
+                new JResp(options.context, response.data);
             } else {
                 response.body = jqXHR.responseText;
                 response_parse();

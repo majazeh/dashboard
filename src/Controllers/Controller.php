@@ -57,6 +57,7 @@ class Controller extends BaseController
         $run = call_user_func_array([new $class, $method], $arguments);
         $data = $run->getData();
         $data->data = $run->object_result;
+        $data->response =  $run;
         return $data;
  }
 }

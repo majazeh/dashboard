@@ -5,6 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="/vendors/bootstrap-4.1.3/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/vendors/bootstrap4-rtl/bootstrap4-rtl.min.css">
 	<link rel="stylesheet" type="text/css" href="/vendors/fontawesome-5.2.0/css/all.css">
+	<link rel="stylesheet" type="text/css" href="/vendors/iziToast/css/iziToast.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/dashio.min.css">
 @show
 
