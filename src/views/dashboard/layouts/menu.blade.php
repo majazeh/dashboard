@@ -5,12 +5,12 @@
 		</a>
     </div>
 	@section('menu-itmes')
-	    <a href="{{ route('dashboard') }}" class="fs-large fs-sm-small fs-large fs-sm-small d-flex flex-column justify-content-center align-items-center text-white text-center menu-item">
+	    <a href="{{ route('dashboard') }}" class="f3 f-sm-1 d-flex flex-column justify-content-center align-items-center text-white text-center menu-item">
 			<i class="fas fa-tachometer-alt mb-1"></i>
 			<span>پیشخوان</span>
 		</a>
 
-		<a href="{{ route('users.index') }}" class="fs-large fs-sm-small fs-large fs-sm-small d-flex flex-column justify-content-center align-items-center text-white text-center menu-item">
+		<a href="{{ route('users.index') }}" class="f3 f-sm-1 d-flex flex-column justify-content-center align-items-center text-white text-center menu-item">
 			<i class="fas fa-user"></i>
 			<span>{{ _d('users') }}</span>
 		</a>
