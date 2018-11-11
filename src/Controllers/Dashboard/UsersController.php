@@ -36,6 +36,7 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
+        \Data::set('user_status_css', $this->user_status_css());
         $users = User::paginate();
         \Data::set('users', $users);
         return $this->view('dashboard.users.index');
@@ -103,6 +104,14 @@ class UsersController extends Controller
             'waiting' => _d('status.waiting'),
             'block' => _d('status.block'),
             'active' => _d('status.active')
+        ];
+    }
+
+    public function user_status_css(){
+        return [
+            'waiting' => 'text-warning',
+            'block' => 'text-danger',
+            'active' => 'text-success'
         ];
     }
 

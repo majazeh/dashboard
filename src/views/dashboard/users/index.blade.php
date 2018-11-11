@@ -54,7 +54,7 @@
                 <td>{{ $user->username }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->mobile }}</td>
-                <td class="{{ ['active' => 'text-success', 'waiting' => 'text-warning', 'block' => 'text-danger'][$user->status] }}">
+                <td class="{{ $user_status_css[$user->status] }}">
                     {{ _d('status.' . $user->status) }}
                 </td>
                 <td>{{ _d('type.' . $user->type) }}</td>
