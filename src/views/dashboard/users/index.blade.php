@@ -3,93 +3,71 @@
 @section('index.content')
 <div class="table-responsive">
     <table class="table table-striped table-hover">
-        <thead>
-            <tr class="d-form">
-                <th>#</th>
-
-                <th>
-                    <div class="form-group mb-0">
-                        <input class="form-control" type="text" name="name" id="name" placeholder="{{ _d('name') }}">
-                        <label for="name">
-                            <i class="fas fa-user-tag"></i>
-                        </label>
-                    </div>
+        <thead class="f1">
+            <tr>
+                <th class="text-center">
+                    {{ _d('id') }}
+                    <i class="fas fa-sort text-black-50"></i>
                 </th>
-
                 <th>
-                    <div class="form-group mb-0">
-                        <input class="form-control" type="text" name="username" id="username" placeholder="{{ _d('username') }}">
-                        <label for="username">
-                            <i class="fas fa-at"></i>
-                        </label>
-                    </div>
+                    {{ _d('name') }}
+                    <i class="fas fa-sort text-black-50"></i>
                 </th>
-
                 <th>
-                    <div class="form-group mb-0">
-                        <input class="form-control" type="text" name="email" id="email" placeholder="{{ _d('email') }}">
-                        <label for="email">
-                            <i class="fas fa-envelope"></i>
-                        </label>
-                    </div>
+                    {{ _d('username') }}
+                    <i class="fas fa-sort text-black-50"></i>
                 </th>
-
                 <th>
-                    <div class="form-group mb-0">
-                        <input class="form-control" type="text" name="mobile" id="mobile" placeholder="{{ _d('mobile') }}">
-                        <label for="mobile">
-                            <i class="fas fa-mobile-alt"></i>
-                        </label>
-                    </div>
+                    {{ _d('email') }}
+                    <i class="fas fa-sort text-black-50"></i>
                 </th>
-
-                <th>{{ _d('account.status') }}</th>
-
-                <th>{{ _d('account.type') }}</th>
-
-                <th>{{ _d('gender') }}</th>
-
                 <th>
-                    <i class="fas fa-cogs"></i>
+                    {{ _d('mobile') }}
+                    <i class="fas fa-sort text-black-50"></i>
                 </th>
+                <th>
+                    {{ _d('account.status') }}
+                    <i class="fas fa-sort text-black-50"></i>
+                </th>
+                <th>
+                    {{ _d('account.type') }}
+                    <i class="fas fa-sort text-black-50"></i>
+                </th>
+                <th>
+                    {{ _d('gender') }}
+                    <i class="fas fa-sort text-black-50"></i>
+                </th>
+                <th></th>
             </tr>
         </thead>
-
-        <tbody>
+        <tbody class="f2">
             @foreach ($users as $user)
             <tr>
-                <td>
-                    <a href="{{ route($module->resource . '.edit', $user->id) }}">{{ $user->id }}</a>
+                <td class="text-center">
+                    {{ $user->id }}
                 </td>
-
-                <td>{{ $user->name }}</td>
-
+                <td>
+                    <a class="text-dark" href="{{ route($module->resource . '.edit', $user->id) }}">
+                        {{ $user->name }}
+                    </a>
+                </td>
                 <td>{{ $user->username }}</td>
-
                 <td>{{ $user->email }}</td>
-
                 <td>{{ $user->mobile }}</td>
-
-                <td>
-                    {{ _d('status.' . $user->status) }}
-                </td>
-
+                <td>{{ _d('status.' . $user->status) }}</td>
                 <td>{{ _d('type.' . $user->type) }}</td>
-
                 <td class="text-center">
                     <i class="fas fa-{{ $user->gender ?: 'genderless' }} {{ $user->gender == 'male' ? 'text-primary' : ($user->gender == 'female' ? 'text-info' : '')}}"></i>
                 </td>
-
-                <td class="text-center">
-                    <a href="{{ route($module->resource . '.edit', $user->id) }}">
-                        <i class="fas fa-edit text-secondary"></i>
+                <td class="d-flex justify-content-around">
+                    <a class="text-secondary" href="{{ route($module->resource . '.edit', $user->id) }}">
+                        <i class="fas fa-edit"></i>
                     </a>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
-
     {{ $users->links() }}
 </div>
 @endsection
