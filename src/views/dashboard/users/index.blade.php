@@ -33,7 +33,7 @@
                     {{ _d('account.type') }}
                     <i class="fas fa-sort text-black-50"></i>
                 </th>
-                <th>
+                <th class="text-center">
                     {{ _d('gender') }}
                     <i class="fas fa-sort text-black-50"></i>
                 </th>
@@ -54,7 +54,9 @@
                 <td>{{ $user->username }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->mobile }}</td>
-                <td>{{ _d('status.' . $user->status) }}</td>
+                <td class="{{ ['active' => 'text-success', 'waiting' => 'text-warning', 'block' => 'text-danger'][$user->status] }}">
+                    {{ _d('status.' . $user->status) }}
+                </td>
                 <td>{{ _d('type.' . $user->type) }}</td>
                 <td class="text-center">
                     <i class="fas fa-{{ $user->gender ?: 'genderless' }} {{ $user->gender == 'male' ? 'text-primary' : ($user->gender == 'female' ? 'text-info' : '')}}"></i>
