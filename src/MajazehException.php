@@ -37,6 +37,12 @@ class MajazehException extends ExceptionHandler
         parent::report($exception);
     }
 
+    public function render($request, Exception $exception)
+    {
+        $exp = $this->getRender($request, $exception);
+        return $exp;
+    }
+
     /**
      * Render an exception into an HTTP response.
      *
@@ -44,7 +50,7 @@ class MajazehException extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Exception $exception)
+    public function getRender($request, Exception $exception)
     {
         if($exception instanceof \Majazeh\Dashboard\MajazehJsonException)
         {
@@ -53,7 +59,7 @@ class MajazehException extends ExceptionHandler
 
         if($exception instanceof \Illuminate\Validation\ValidationException)
         {
-            return response()->json(['is_ok' => false, 'message' => 'VALIDATION_ERROR' , 'errors' => $exception->errors()], 401);
+            return response()->json(['is_ok' => false, 'message' => 'VALIDATION_ERROR', 'message_text' => _d('VALIDATION_ERROR') , 'errors' => $exception->errors()], 401);
         }
         if($exception instanceof \Symfony\Component\Debug\Exception\FatalThrowableError)
         {
@@ -62,13 +68,14 @@ class MajazehException extends ExceptionHandler
                 return response()->json([
                     'is_ok' => false,
                     'message' => $exception->getMessage(),
+                    'message_text' => _d($exception->getMessage()),
                     'file' => $exception->getFile(),
                     'line' => $exception->getLine(),
                 ], 500);
             }
             else
             {
-                return response()->json(['is_ok' => false, 'message' => 'INTERNALL_ERROR'], 500);
+                return response()->json(['is_ok' => false, 'message' => 'INTERNALL_ERROR', 'message_text' => _d('INTERNALL_ERROR')], 500);
             }
         }
 
@@ -87,11 +94,7 @@ class MajazehException extends ExceptionHandler
                     break;
                 }
             }
-            return response()->json(['is_ok' => false, 'message' => $message], $status);
+            return response()->json(['is_ok' => false, 'message' => $message, 'message_text' => _d($message)], $status);
         }
-    }
-    protected function unauthenticated($request, AuthenticationException $exception)
-    {
-        return response()->json(['is_ok' => false, 'message' => 'UNAUTHENTICATED'], 401);
     }
 }

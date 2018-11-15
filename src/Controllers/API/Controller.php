@@ -45,6 +45,7 @@ class Controller {
 		{
 			$response['is_ok'] = false;
 		}
+		$response['message_text'] = _d($response['message']);
 		$json = response()->json($response, $code);
 		$json->object_result = $object_result;
 		return $json;
