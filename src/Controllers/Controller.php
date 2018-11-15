@@ -38,6 +38,7 @@ class Controller extends BaseController
         {
             \Data::setLayouts('mod', 'xhr');
             $name =  \View::exists("$name-xhr") ? "$name-xhr" : $name;
+            return json_encode(\Data::get('global')) . "\n" . view($name, \Data::all());
         }
         elseif(strstr(request()->header('accept'), 'application/json'))
         {
