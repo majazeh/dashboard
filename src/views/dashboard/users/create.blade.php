@@ -57,7 +57,7 @@
     <div class="invalid-feedback">{{ $errors->first('password') }}</div>
     @endif
 </div>
-
+@if (Auth::user()->type == 'admin')
 <div class="radio tick mb-3">
     <label>
         {{ _d('account.status') }}
@@ -76,6 +76,7 @@
     </div>
     @endforeach
 </div>
+@endif
 
 <div class="radio tick mb-3">
     <label>
@@ -97,6 +98,7 @@
     </div>
 </div>
 
+@if (Auth::user()->type == 'admin')
 <div class="input-group">
     <select class="custom-select" name="type" id="type">
         @foreach ($userTypes as $type => $value)
@@ -108,4 +110,5 @@
         @endforeach
     </select>
 </div>
+@endif
 @endsection

@@ -47,6 +47,10 @@ class UsersController extends Controller
      */
     public function create(Request $request)
     {
+        if(\Auth::user()->type != 'admin')
+        {
+            return abort(404);
+        }
         \Data::set('userTypes', $this->user_types());
         \Data::set('userStatus', $this->user_status());
         return $this->view('dashboard.users.create');
@@ -54,6 +58,10 @@ class UsersController extends Controller
 
     public function store(Request $request)
     {
+        if(\Auth::user()->type != 'admin')
+        {
+            return abort(404);
+        }
         $this->validator($request)->validate();
         $data = $request->all();
         $data['password'] = Hash::make($request['password']);
@@ -62,9 +70,15 @@ class UsersController extends Controller
 
     public function edit(Request $request, User $user)
     {
+        if(\Auth::user()->type != 'admin' && \Auth::id() != $user->id)
+        {
+            return abort(404);
+        }
         \Data::set('user', $user);
         \Data::set('id', $user->id);
-        return $this->create($request);
+        \Data::set('userTypes', $this->user_types());
+        \Data::set('userStatus', $this->user_status());
+        return $this->view('dashboard.users.create');
     }
 
     // public function show(Request $request, User $user)
@@ -74,8 +88,22 @@ class UsersController extends Controller
 
     public function update(Request $request, User $user)
     {
+        if(\Auth::user()->type != 'admin' && \Auth::id() != $user->id)
+        {
+            return abort(404);
+        }
         $this->validator($request, $user)->validate();
         $data = $request->all();
+        if (\Auth::user()->type != 'admin') {
+            if(isset($data['type']))
+            {
+                unset($data['type']);
+            }
+            if(isset($data['status']))
+            {
+                unset($data['status']);
+            }
+        }
         unset($data['_token']);
         unset($data['_method']);
         if(!empty($data['password']))
