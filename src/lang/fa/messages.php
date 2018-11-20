@@ -20,7 +20,11 @@ return [
 	'account.type' => 'نوع کاربری',
 	'status.waiting' => 'در انتظار',
 	'status.block' => 'قفل‌شده',
-	'status.active' => 'فعال'
+	'status.active' => 'فعال',
+
+	'dashboard' => 'داشبورد',
+	'login/register' => 'ورود / عضویت',
+	'google.login' => 'ورود با گوگل',
 
 ];
 ?>

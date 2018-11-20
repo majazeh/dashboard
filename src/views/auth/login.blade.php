@@ -7,7 +7,7 @@
     <div class="enter-card">
         <div class="d-flex justify-content-center align-items-center mb-4">
             <img src="/images/cube.png" alt="logo" width="30" height="30" class="enter-logo">
-            <h1 class="mb-0">داشبورد</h1>
+            <h1 class="mb-0">{{ _d('dashboard') }}</h1>
         </div>
 
         <form class="d-form mb-3" method="POST">
@@ -35,12 +35,21 @@
                 @if (\Session::has('registerMsg'))
                     <span>{{ \Session::get('registerMsg') }}</span>
                 @endif
-                <button type="submit" class="btn btn-gradient btn-rounded btn-block btn-enter fs-medium font-weight-xlight">ورود / ‌ثبت‌ نام</button>
+                <button type="submit" class="btn btn-gradient btn-rounded btn-block btn-enter fs-medium font-weight-xlight">{{ _d('login/register') }}</button>
                 @if (config('services.google.client_id'))
-                    <a class="btn btn-block btn-rounded btn-block btn-enter btn-google fs-medium font-weight-xlight" href="/login/google">
-                        <span>ورود با گوگل</span>
+                    <a class="btn btn-block btn-rounded btn-block btn-enter btn-google fs-medium font-weight-xlight direct" href="/login/google">
+                        <span>{{ _d('google.login') }}</span>
                         <img src="/images/google.svg" alt="Google" width="18">
                     </a>
+                @endif
+                @if(config('services.telegram.login'))
+                <div class="form-group">
+                        @if (config('services.telegram.redirect_url'))
+                            <script async src="https://telegram.org/js/telegram-widget.js?5" data-telegram-login="{{ config('services.telegram.bot') }}" data-size="medium" data-auth-url="{{ config('services.telegram.redirect_url') }}" {{ config('services.telegram.request_access') ? 'data-request-access="write"' : '' }}></script>
+                        @else
+                            <script async src="https://telegram.org/js/telegram-widget.js?5" data-telegram-login="{{ config('services.telegram.bot') }}" data-size="medium" data-onauth="onTelegramAuth(user)" {{ config('services.telegram.request_access') ? 'data-request-access="write"' : '' }}></script>
+                    @endif
+                </div>
                 @endif
             </div>
         </form>
