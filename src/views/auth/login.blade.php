@@ -45,7 +45,7 @@
                 @if(config('services.telegram.login'))
                 <div class="form-group">
                         @if (config('services.telegram.redirect_url'))
-                            <script async src="https://telegram.org/js/telegram-widget.js?5" data-telegram-login="{{ config('services.telegram.bot') }}" data-size="medium" data-auth-url="{{ config('services.telegram.redirect_url') }}" {{ config('services.telegram.request_access') ? 'data-request-access="write"' : '' }}></script>
+                            <script async src="https://telegram.org/js/telegram-widget.js?5" data-telegram-login="{{ config('services.telegram.bot') }}" data-size="medium" data-auth-url="{{ config('services.telegram.redirect_url') }}" data-request-access="{{ config('services.telegram.request_access') ? 'write' : '' }}"></script>
                         @else
                             <script async src="https://telegram.org/js/telegram-widget.js?5" data-telegram-login="{{ config('services.telegram.bot') }}" data-size="medium" data-onauth="onTelegramAuth(user)" {{ config('services.telegram.request_access') ? 'data-request-access="write"' : '' }}></script>
                     @endif

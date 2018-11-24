@@ -114,7 +114,7 @@ class UsersController extends Controller
         {
             unset($data['password']);
         }
-        User::whereId($user->id)->update($data);
+        $user = User::find($user->id)->update($data);
         return redirect(route(\Data::getModule('resource').'.edit', $user->id));
     }
 

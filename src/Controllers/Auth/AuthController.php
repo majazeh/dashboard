@@ -3,6 +3,7 @@ namespace Majazeh\Dashboard\Controllers\Auth;
 
 use App\User;
 use Majazeh\Dashboard\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 
 class AuthController extends Controller
 {
@@ -36,7 +37,45 @@ class AuthController extends Controller
 		$data['name']		= $user->name;
 		$data['email']		= $user->email;
 		$data['google_id']	= $user->id;
-		$data['avatar']		= $user->avatar;
+		$data['gender']		= isset($user->user['gender']) && in_array($user->user['gender'], ['male', 'female']) ? $user->user['gender'] : null;
+		$data['status']		= 'active';
+
+		$image = Image::make($user->avatar_original);
+
+		if(!is_dir(public_path('storage')))
+		{
+			mkdir(public_path('storage'));
+		}
+		if(!file_exists(public_path('/storage/user.txt')))
+		{
+			$count = 0;
+		}
+		else
+		{
+			$count = file_get_contents(public_path('/storage/user.txt'));
+		}
+		file_put_contents(public_path('/storage/user.txt'), ++$count);
+		$folder = intval(ceil($count / 1000));
+		$path_name = '/storage/user_avatars-'. str_repeat('0', 5 - strlen($folder)) . $folder;
+		$path = public_path($path_name);
+		if(!is_dir($path))
+		{
+			mkdir($path);
+		}
+		$image->resize(500, 500);
+		$name = time().rand(123456789, 999999999);
+		$image->encode('jpg', 100);
+
+		$image->save($path . "/$name.jpg");
+		$md5 = md5_file($path . "/$name.jpg");
+		rename($path . "/$name.jpg", $path . "/$md5.jpg");
+		$image->resize(250, 250);
+		$image->save($path . "/$md5-250.jpg");
+		$image->resize(100, 100);
+		$image->save($path . "/$md5-100.jpg");
+
+		$data['avatar']		= asset("$path_name/$md5");
+
 		$newUser 			= $this->user_create($data, $data);
 		auth()->login($newUser, true);
 	}
