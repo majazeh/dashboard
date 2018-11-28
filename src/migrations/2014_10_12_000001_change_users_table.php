@@ -15,20 +15,21 @@ class ChangeUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
 
-            $table->string('nikname')->nullable();
             $table->string('name')->nullable()->change();
             $table->string('email')->nullable()->change();
-            $table->string('mobile')->unique()->nullable();
-            $table->string('username')->unique()->nullable();
-            $table->string('google_id')->unique()->nullable();
-            $table->string('facebook_id')->unique()->nullable();
-            $table->string('twitter_id')->unique()->nullable();
 
-            $table->string('avatar')->nullable();
+            $table->string('nikname')->nullable()->after('name');
+            $table->string('mobile')->unique()->nullable()->after('email');
+            $table->string('username')->unique()->nullable()->after('mobile');
+            $table->string('google_id')->unique()->nullable()->after('username');
+            $table->string('facebook_id')->unique()->nullable()->after('google_id');
+            $table->string('twitter_id')->unique()->nullable()->after('facebook_id');
 
-            $table->string('gender')->nullable(); // ['male', 'female']
-            $table->string('status')->default('waiting'); // ['waiting', 'active', 'block']
-            $table->string('type')->default('user'); // ['guest', 'user', 'admin']
+            $table->string('avatar')->nullable()->after('facebook_id');
+
+            $table->string('gender')->nullable()->after('avatar'); // ['male', 'female']
+            $table->string('status')->default('waiting')->after('gender'); // ['waiting', 'active', 'block']
+            $table->string('type')->default('user')->after('status'); // ['guest', 'user', 'admin']
         });
     }
 
