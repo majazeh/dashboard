@@ -197,7 +197,7 @@ class Controller {
 		return $this->response(empty($changed) ? "Unchanged" : substr($table->getTable(), 0, -1) . " changed successfully", [
 			'old' => empty($changed) ? null : $original,
 			'changed' => empty($changed) ? null : $changed,
-			'new' => $table->toArray()
+			'new' => $table
 		]);
 	}
 
