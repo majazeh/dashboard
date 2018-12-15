@@ -121,7 +121,7 @@ class UsersController extends Controller
         {
             unset($data['password']);
         }
-        $user = User::find($user->id)->update($data);
+        $user->update($data);
         if($request->ajax())
         {
             return response()->json([
