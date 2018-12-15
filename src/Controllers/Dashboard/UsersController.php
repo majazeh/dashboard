@@ -66,6 +66,13 @@ class UsersController extends Controller
         $data = $request->all();
         $data['password'] = Hash::make($request['password']);
         $store = User::create($data);
+        if($request->ajax())
+        {
+            return response()->json([
+                'is_ok' => true,
+                'message' => __('USER_CREATED_SUCCESSFULLY')
+            ]);
+        }
     }
 
     public function edit(Request $request, User $user)
@@ -115,6 +122,14 @@ class UsersController extends Controller
             unset($data['password']);
         }
         $user = User::find($user->id)->update($data);
+        if($request->ajax())
+        {
+            return response()->json([
+                'is_ok' => true,
+                'message' => __('USER_CHANGED_SUCCESSFULLY'),
+                'redirect' => route(\Data::getModule('resource').'.edit', $user->id)
+            ]);
+        }
         return redirect(route(\Data::getModule('resource').'.edit', $user->id));
     }
 
