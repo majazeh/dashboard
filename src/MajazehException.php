@@ -61,7 +61,7 @@ class MajazehException extends ExceptionHandler
         {
             return response()->json(['is_ok' => false, 'message' => 'VALIDATION_ERROR', 'message_text' => _d('VALIDATION_ERROR') , 'errors' => $exception->errors()], 401);
         }
-        if($exception instanceof \Symfony\Component\Debug\Exception\FatalThrowableError)
+        if($exception instanceof \Symfony\Component\Debug\Exception\FatalThrowableError || $exception instanceof \ErrorException)
         {
             if(env('APP_DEBUG', false))
             {
