@@ -7,8 +7,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 
 class Controller {
-	use AuthenticatesUsers, DispatchesJobs, ValidatesRequests
-    Majazeh\Dashboard\Controllers\Response, Majazeh\Dashboard\Controllers\Paginate;
+	use AuthenticatesUsers, DispatchesJobs, ValidatesRequests,
+    \Majazeh\Dashboard\Controllers\Response, \Majazeh\Dashboard\Controllers\Paginate;
 	public $successStatus = 200;
 
 	public function __construct()
