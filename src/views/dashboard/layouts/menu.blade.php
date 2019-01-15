@@ -1,18 +1,17 @@
-<nav id="menu" class="d-none d-sm-flex flex-wrap flex-sm-nowrap flex-sm-column align-items-stretch menu menu-optional">
-    <div id="branding-logo" class="d-none d-sm-flex align-items-center justify-content-center branding branding-logo">
-        <a class="branding-logo-img" href="{{ env('APP_URL') }}">
-			<img src="{{ env('APP_LOGO_50', asset('images/logo/logo-50.png')) }}" alt="cube" width="50" height="50">
-		</a>
-    </div>
-	@section('menu-itmes')
-	    <a href="{{ route('dashboard') }}" class="f3 f-sm-1 d-flex flex-column justify-content-center align-items-center text-white text-center menu-item">
-			<i class="fas fa-tachometer-alt mb-1"></i>
-			<span>پیشخوان</span>
-		</a>
+<div class="d-none d-sm-block menu">
+    <a class="d-flex justify-content-center align-items-center branding-logo" href="{{ env('APP_URL') }}">
+        <img src="{{ asset('images/logo.png') }}" alt="{{ ucfirst(_d('logo')) }}" width="40" height="40">
+    </a>
 
-		<a href="{{ route('users.index') }}" class="f3 f-sm-1 d-flex flex-column justify-content-center align-items-center text-white text-center menu-item">
-			<i class="fas fa-user"></i>
-			<span>{{ _d('users') }}</span>
-		</a>
-	@show
-</nav>
+    @section('menu-itmes')
+    <a class="d-flex flex-column justify-content-center align-items-center menu-item" href="{{ route('dashboard') }}">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>{{ _d('Dashboard') }}</span>
+    </a>
+
+    <a class="d-flex flex-column justify-content-center align-items-center menu-item" href="{{ route('users.index') }}">
+        <i class="fas fa-users"></i>
+        <span>{{ _d('Users') }}</span>
+    </a>
+    @show
+</div>

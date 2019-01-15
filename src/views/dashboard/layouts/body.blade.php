@@ -1,25 +1,25 @@
-<div id="sidebar" class="d-none d-sm-flex sidebar">
-	@section('body-menu')
-		@include('dashboard.layouts.menu')
-	@show
-	@section('body-desktop')
-		@include('dashboard.layouts.desktop')
-	@show
-</div>
+@section('body-menu')
+    @include('dashboard.layouts.menu')
+@show
 
-<button id="btn-menu" class="d-sm-none btn-menu menu-open" type="button">
-<i class="fas fa-btn-menu"></i>
-</button>
+{{-- <button id="btn-menu" class="d-none d-sm-none btn-menu menu-open" type="button">
+    <i class="fas fa-btn-menu"></i>
+</button> --}}
 
-<div id="content" class="content">
+<div class="d-flex flex-column body">
+    @section('body-navigation')
+        @include('dashboard.layouts.navigation')
+    @show
 
-	@section('body-topbar')
-		@include('dashboard.layouts.topbar')
-	@show
-	
-	@section('main-tag')
-		@include('dashboard.layouts.main')
-	@show
+    <div class="d-flex body-content">
+        @section('body-desktop')
+            @include('dashboard.layouts.desktop')
+        @show
+
+        @section('body-main')
+            @include('dashboard.layouts.main')
+        @show
+    </div>
 </div>
 
 @include('dashboard.layouts.footer')

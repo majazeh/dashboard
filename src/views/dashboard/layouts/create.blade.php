@@ -4,12 +4,12 @@
 @include('dashboard.layouts.create-content')
 @endsection
 @section('topbar-actions')
-<a href="{{ route($module->resource . '.index') }}" class="btn btn-xs btn-outline-info btn-rounded d-none d-sm-inline-block btn-info-color">
+<a href="{{ route($module->resource . '.index') }}" class="btn btn-sm btn-info btn-gradient">
     <i class="{{ $module->icons['index'] }}"></i>
     {{ _d($module->resource.'.index') }}
 </a>
 @if ($module->action == 'edit')
-<a href="{{ route($module->resource . '.create') }}" class="btn btn-xs btn-outline-success btn-rounded d-none d-sm-inline-block btn-success-color">
+<a href="{{ route($module->resource . '.create') }}" class="btn btn-sm btn-success btn-gradient">
     <i class="{{ $module->icons['create'] }}"></i>
     {{ _d($module->resource.'.create') }}
 </a>
