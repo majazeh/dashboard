@@ -4,7 +4,7 @@ namespace Majazeh\Dashboard\Controllers;
 
 class Data
 {
-	private static $Data = [];
+	public static $Data = [];
 
 	public static function set($key, $value)
 	{

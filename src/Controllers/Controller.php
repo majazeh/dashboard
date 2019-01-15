@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests,
+    Response, Paginate;
 
     public $icon = [
         'index' => 'fas fa-list-alt',
@@ -21,14 +22,15 @@ class Controller extends BaseController
     public function __construct(Request $request)
     {
         if(!\Route::getCurrentRoute()) return;
-    	$this->resource = isset($this->resource) ? $this->resource : $request->segment(2);
-    	\Data::setModule('resource', $this->resource);
-    	\Data::setGlobal('title', _d('title.dashio') . ' | ' . _d(\Route::getCurrentRoute()->getName()));
+        $this->resource = isset($this->resource) ? $this->resource : $request->segment(2);
+        \Data::setModule('resource', $this->resource);
+        \Data::setGlobal('title', _d('title.dashio') . ' | ' . _d(\Route::getCurrentRoute()->getName()));
         \Data::setModule('header', _d(\Route::getCurrentRoute()->getName()));
         \Data::setModule('action', last(explode('.', \Route::getCurrentRoute()->getName())));
         \Data::setModule('icons', $this->icon);
         $global_icon = isset($this->icon[\Route::getCurrentRoute()->getActionMethod()]) ? $this->icon[\Route::getCurrentRoute()->getActionMethod()] : 'fas fa-list-alt';
         \Data::setModule('icon', $global_icon);
+        $this->data = \Data::$Data;
     }
 
     public function view($name)
@@ -60,5 +62,5 @@ class Controller extends BaseController
         $data->data = $run->object_result;
         $data->response =  $run;
         return $data;
- }
+    }
 }

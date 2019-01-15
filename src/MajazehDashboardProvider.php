@@ -5,6 +5,8 @@ namespace Majazeh\Dashboard;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Http\Request;
+use Blade;
 
 class MajazehDashboardProvider extends ServiceProvider
 {
@@ -32,6 +34,16 @@ class MajazehDashboardProvider extends ServiceProvider
                 MajazehException::class
             );
         }
+
+        Blade::directive('sort_icon', function($key) {
+            $query = request()->all();
+            $query['order'] = $key;
+            $query['sort'] = 'asc';
+            $asc = Request::create(url()->current(), 'GET', $query)->getUri();
+            $query['sort'] = 'desc';
+            $desc = Request::create(url()->current(), 'GET', $query)->getUri();
+            return "<?php echo isset(\$_GET['order']) && strtolower(\$_GET['order']) == strtolower('$key') ? (isset(\$_GET['sort']) && strtolower(\$_GET['sort']) == 'asc' ? '<a href=\"'. order_link('$key', 'desc') .'\"><i class=\"fas text-primary fa-sort-up\"></i></a>' : '<a href=\"'. order_link('$key', 'asc') .'\"><i class=\"fas text-primary fa-sort-down\"></i></a>') : '<a href=\"'. order_link('$key', 'desc') .'\"><i class=\"fas fa-sort text-black-50\"></i></a>' ?>";
+        });
     }
 
     /**

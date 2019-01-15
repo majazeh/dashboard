@@ -7,9 +7,8 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 
 class Controller {
-	use AuthenticatesUsers;
-	use DispatchesJobs;
-	use ValidatesRequests;
+	use AuthenticatesUsers, DispatchesJobs, ValidatesRequests
+    Majazeh\Dashboard\Controllers\Response, Majazeh\Dashboard\Controllers\Paginate;
 	public $successStatus = 200;
 
 	public function __construct()
@@ -19,36 +18,6 @@ class Controller {
 			preg_match("#\\\([^\\\]*[^s])s?Controller$#", get_class($this), $model_name);
 			$this->table = $model_name[1];
 		}
-	}
-
-	public function response($result, $data = [], $code = 200)
-	{
-		$response = ['is_ok' => true, 'message' => ':)'];
-		$object_result = $data;
-		if(is_object($result))
-		{
-			$object_result = $result;
-			$result = $result->toArray();
-		}
-		elseif(is_object($data))
-		{
-			$object_result = $data;
-			$data = $data->toArray();
-		}
-		$response = is_array($result) ? array_merge($response, $result) : array_merge($response, ['message' => $result]);
-		if(!empty($data))
-		{
-			$response['data'] = $data;
-		}
-		$response['message'] = str_replace(" ", "_", strtoupper($response['message']));
-		if($code != 200)
-		{
-			$response['is_ok'] = false;
-		}
-		$response['message_text'] = _d($response['message']);
-		$json = response()->json($response, $code);
-		$json->object_result = $object_result;
-		return $json;
 	}
 
 	public function get_model()
@@ -126,26 +95,6 @@ class Controller {
 	public function index(Request $request)
 	{
 		return $this->response($this->get_model()::paginate());
-	}
-
-	public function paginate_order(Request $request, $model, $order_list = ['id'])
-	{
-		\DB::enableQueryLog();
-		$keys = array_keys($order_list);
-		$order = $request->input('order') && in_array($request->input('order'), $keys) ? strtolower($request->input('order')) : 'id';
-		if(isset($order_list[$order]))
-		{
-			$order = $order_list[$order];
-		}
-		$sort = strtolower($request->input('sort')) == 'asc' ? 'asc' : 'desc';
-		$model->orderBy($order, $sort);
-		$paginate = $model->paginate();
-		if($order != 'id' || $sort != 'desc')
-		{
-	        $paginate->appends($request->all('order', 'sort'));
-		}
-		return $paginate;
-
 	}
 
 	public function show(Request $request, $id)
