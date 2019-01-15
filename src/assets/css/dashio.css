@@ -1,4 +1,3 @@
-@charset "UTF-8";
 /*
 @ In the Name of Allah
 Description: Dashio
@@ -264,12 +263,16 @@ body[data-page="login"], body[data-page="register"] {
   height: 65px;
   min-height: 65px;
   max-height: 65px;
-  background-color: #fff; }
+  background-color: #fff;
+  transition: padding .2s; }
+  .navigation .navigation-inner {
+    padding: 0 23px; }
   .navigation .navigation-search i {
     vertical-align: middle;
     color: #a5b9d0;
     margin-left: .25rem; }
   .navigation .navigation-search input {
+    width: 10rem;
     color: #7b90a5;
     font-size: .875rem;
     border: none; }
@@ -324,15 +327,24 @@ body[data-page="login"], body[data-page="register"] {
   max-width: 200px;
   white-space: nowrap;
   text-overflow: ellipsis;
-  -o-text-overflow: ellipsis; }
+  -o-text-overflow: ellipsis;
+  padding: 0 15px; }
   .branding-title > a {
     color: #364558;
     font-size: .875rem; }
+
+@media (min-width: 576px) {
+  .navigation {
+    padding-right: 0; } }
 
 .body-content {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1; }
+
+@media (min-width: 576px) {
+  .body-content {
+    padding-right: 0; } }
 
 .sidebar {
   position: fixed;
@@ -356,7 +368,11 @@ body[data-page="login"], body[data-page="register"] {
 
 .branding-logo {
   width: inherit;
-  height: 65px; }
+  height: 65px;
+  min-height: 65px;
+  max-height: 65px;
+  -ms-flex-preferred-size: 65px;
+  flex-basis: 65px; }
 
 .branding-old {
   z-index: 9;
@@ -453,6 +469,10 @@ body[data-page="login"], body[data-page="register"] {
   background-position-y: top;
   overflow-x: hidden;
   overflow-y: auto; }
+  @media (min-width: 576px) {
+    .desktop {
+      position: static;
+      height: initial; } }
   .desktop .border-between {
     border-right: 0;
     border-left: 1px solid #edf1f5; }
@@ -461,11 +481,11 @@ body[data-page="login"], body[data-page="register"] {
   .desktop .border-bottom {
     border-bottom: 1px solid #edf1f5 !important; }
   .desktop .number {
-    font-size: 1.8rem;
+    font-size: 1.375rem;
     line-height: 2.5rem;
     color: #364558; }
   .desktop .text {
-    font-size: 1rem;
+    font-size: .75rem;
     color: #7b90a5; }
   .desktop .tile,
   .desktop .single-tile {
@@ -477,7 +497,7 @@ body[data-page="login"], body[data-page="register"] {
   .desktop a {
     color: inherit; }
   .desktop .desktop-list .desktop-list-title {
-    font-size: 1.125rem;
+    font-size: .875rem;
     font-weight: 300;
     color: #364558;
     margin-bottom: 0; }
@@ -490,7 +510,7 @@ body[data-page="login"], body[data-page="register"] {
     border: none;
     background-color: transparent;
     color: #7b90a5;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-weight: 300;
     -webkit-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;
@@ -514,7 +534,7 @@ body[data-page="login"], body[data-page="register"] {
     .desktop .desktop-list .list-group-item {
       font-size: 0.75rem; } }
   .desktop .desktop-progress .desktop-progress-title {
-    font-size: 1.125rem;
+    font-size: .875rem;
     font-weight: 300;
     color: #364558;
     padding-bottom: 0.5rem; }
@@ -702,15 +722,15 @@ body[data-page="login"], body[data-page="register"] {
     color: #364558;
     box-shadow: none; }
 
-.page-head .page-head-title {
-  color: #364558; }
-
-.page-head .page-head-text {
-  font-weight: 300;
-  color: #7b90a5; }
-
-.page-head.border-bottom {
-  border-bottom: 1px solid rgba(165, 185, 208, 0.5) !important; }
+.page-head {
+  padding: 0 15px; }
+  .page-head .page-head-title {
+    color: #364558; }
+  .page-head .page-head-text {
+    font-weight: 300;
+    color: #7b90a5; }
+  .page-head.border-bottom {
+    border-bottom: 1px solid rgba(165, 185, 208, 0.5) !important; }
 
 .form-group > label {
   font-size: .875rem;
@@ -779,56 +799,10 @@ body[data-page="login"], body[data-page="register"] {
 .rtl .alert .close {
   background-color: rgba(255, 255, 255, 0.2); }
 
-.breadcrumb-one .breadcrumb-item + .breadcrumb-item::before {
-  content: "!"; }
-
-.breadcrumb-two .breadcrumb-item + .breadcrumb-item::before {
-  content: "";
-  font-family: 'Font Awesome 5 Free'; }
-
-.pagination-gradient .page-item .page-link {
-  color: #2f9ce5; }
-
-.pagination-gradient .page-item:hover .page-link {
-  color: #fff;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(40%, #2f9ce6), to(#3cd3ad));
-  background: -webkit-linear-gradient(top, #2f9ce6 40%, #3cd3ad 100%);
-  background: -o-linear-gradient(top, #2f9ce6 40%, #3cd3ad 100%);
-  background: linear-gradient(180deg, #2f9ce6 40%, #3cd3ad 100%); }
-
-.pagination-gradient .page-item.active .page-link {
-  color: #fff;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(40%, #2f9ce6), to(#3cd3ad));
-  background: -webkit-linear-gradient(top, #2f9ce6 40%, #3cd3ad 100%);
-  background: -o-linear-gradient(top, #2f9ce6 40%, #3cd3ad 100%);
-  background: linear-gradient(180deg, #2f9ce6 40%, #3cd3ad 100%);
-  border-color: #dee2e6; }
-
-.pagination-gradient .page-item.disabled .page-link {
-  color: #6c757d; }
-
-.pagination-gradient .page-item.disabled:hover .page-link {
-  background: #fff; }
-
-.pagination-rounded .page-item:first-child .page-link {
-  border-top-left-radius: 10rem;
-  border-bottom-left-radius: 10rem; }
-
-.pagination-rounded .page-item:last-child .page-link {
-  border-top-right-radius: 10rem;
-  border-bottom-right-radius: 10rem; }
-
-.rtl .pagination-rounded .page-item:first-child .page-link {
-  border-top-right-radius: 10rem;
-  border-bottom-right-radius: 10rem;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0; }
-
-.rtl .pagination-rounded .page-item:last-child .page-link {
-  border-top-left-radius: 10rem;
-  border-bottom-left-radius: 10rem;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0; }
+.breadcrumb {
+  margin-bottom: 0;
+  padding: 0;
+  background-color: transparent; }
 
 .progress-gradient {
   background: -webkit-gradient(linear, right top, left top, from(#2f9ce6), to(#3cd3ad));
@@ -1026,32 +1000,6 @@ table.table tr th:last-child {
   padding: 1rem;
   min-width: 100px; }
 
-.pagination {
-  float: right;
-  margin: 0 0 5px; }
-  .pagination li a {
-    border: none;
-    font-size: 13px;
-    min-width: 30px;
-    min-height: 30px;
-    color: #999;
-    margin: 0 2px;
-    line-height: 30px;
-    border-radius: 2px !important;
-    text-align: center;
-    padding: 0 6px; }
-  .pagination li a:hover {
-    color: #666; }
-  .pagination li i {
-    font-size: 16px;
-    padding-top: 6px; }
-  .pagination li:active a, .pagination li:active a.page-link {
-    background-color: #03A9F4; }
-  .pagination li:active a:hover {
-    background-color: #0397d6; }
-  .pagination li.disabled i {
-    color: #ccc; }
-
 .hint-text {
   float: left;
   margin-top: 0.7rem;
@@ -1201,3 +1149,59 @@ table.table tr th:last-child {
 
 .dropdown-item {
   font-size: .75rem; }
+
+.product-group .card {
+  width: 140px;
+  margin: .5rem; }
+
+.product-group .card-body {
+  padding: .5rem; }
+
+.product-group .card-title {
+  font-size: .75rem; }
+
+@media (min-width: 576px) {
+  .product-group .card {
+    width: 200px; }
+  .product-group .card-body {
+    padding: 1.25rem; } }
+
+.btn-menu {
+  position: fixed;
+  z-index: 2;
+  right: 12px;
+  bottom: 10px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: right .2s;
+  color: #edf1f5;
+  border: none;
+  border-radius: 50%;
+  outline: none;
+  background-color: #364558;
+  box-shadow: 0px 0 1px rgba(165, 185, 207, 0.25); }
+  .btn-menu:focus {
+    outline: none; }
+  .btn-menu .fas {
+    font-size: 1.25rem;
+    vertical-align: middle; }
+
+body.responsive-menu .btn-menu {
+  box-shadow: 0 0 1px #eee; }
+
+body.responsive-menu .navigation {
+  padding-right: 75px; }
+
+body.responsive-menu .menu {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  height: 100%; }
+  body.responsive-menu .menu .menu-inner {
+    height: calc(100vh - 135px);
+    max-height: calc(100vh - 65px);
+    padding-bottom: 65px;
+    overflow-x: hidden;
+    overflow-y: auto; }
