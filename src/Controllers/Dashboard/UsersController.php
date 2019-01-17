@@ -69,8 +69,9 @@ class UsersController extends Controller
         if($request->ajax())
         {
             return response()->json([
-                'is_ok' => true,
-                'message' => __('USER_CREATED_SUCCESSFULLY')
+                'is_ok'    => true,
+                'message'  => __('USER_CREATED_SUCCESSFULLY'),
+                'redirect' => route('users.index')
             ]);
         }
     }
@@ -127,7 +128,7 @@ class UsersController extends Controller
             return response()->json([
                 'is_ok' => true,
                 'message' => __('USER_CHANGED_SUCCESSFULLY'),
-                'redirect' => route(\Data::getModule('resource').'.edit', $user->id)
+                'redirect' => route(\Data::getModule('resource').'.index')
             ]);
         }
         return redirect(route(\Data::getModule('resource').'.edit', $user->id));
