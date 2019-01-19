@@ -6,7 +6,6 @@ use Majazeh\Dashboard\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use App\User;
 
 class UsersController extends Controller
 {
@@ -37,7 +36,7 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         \Data::set('user_status_css', $this->user_status_css());
-        $users = User::paginate();
+        $users = $this->paginate_order($request, config('auth.providers.users.model')::select('*'), ['id', 'name', 'username', 'status', 'type', 'gender']);
         \Data::set('users', $users);
         return $this->view('dashboard.users.index');
     }
@@ -65,7 +64,7 @@ class UsersController extends Controller
         $this->validator($request)->validate();
         $data = $request->all();
         $data['password'] = Hash::make($request['password']);
-        $store = User::create($data);
+        $store = config('auth.providers.users.model')::create($data);
         if($request->ajax())
         {
             return response()->json([
@@ -76,8 +75,9 @@ class UsersController extends Controller
         }
     }
 
-    public function edit(Request $request, User $user)
+    public function edit(Request $request, $user)
     {
+        $user = config('auth.providers.users.model')::findOrfail($user);
         if(\Auth::user()->type != 'admin' && \Auth::id() != $user->id)
         {
             return abort(404);
@@ -94,8 +94,9 @@ class UsersController extends Controller
     //     return $this->view('dashboard.users.show');
     // }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, $user)
     {
+        $user = config('auth.providers.users.model')::findOrfail($user);
         if(\Auth::user()->type != 'admin' && \Auth::id() != $user->id)
         {
             return abort(404);
@@ -159,7 +160,7 @@ class UsersController extends Controller
         ];
     }
 
-    public function validator(Request $request, User $user = null)
+    public function validator(Request $request, $user = null)
     {
         if(!isset($this->validator['type']))
         {
@@ -177,48 +178,50 @@ class UsersController extends Controller
             {
                 $validator->errors()->add('email', 'enter.username.method');
             }else{
+                $limit = 0;
                 $queryDuplicate = null;
                 if($request->input('username'))
                 {
-                    $queryDuplicate = User::Where('username' , $request->input('username'));
+                    $limit++;
+                    $queryDuplicate = config('auth.providers.users.model')::Where('username' , $request->input('username'));
                 }
                 if($request->input('email'))
                 {
+                    $limit++;
                     if($queryDuplicate)
                     {
                         $queryDuplicate->orWhere('email' , $request->input('email'));
                     }
                     else
                     {
-                        $queryDuplicate = User::Where('email' , $request->input('email'));
+                        $queryDuplicate = config('auth.providers.users.model')::Where('email' , $request->input('email'));
                     }
                 }
                 if($request->input('mobile'))
                 {
+                    $limit++;
                     if($queryDuplicate)
                     {
                         $queryDuplicate->orWhere('mobile' , $request->input('mobile'));
                     }
                     else
                     {
-                        $queryDuplicate = User::Where('mobile' , $request->input('mobile'));
+                        $queryDuplicate = config('auth.providers.users.model')::Where('mobile' , $request->input('mobile'));
                     }
                 }
-                $getDuplicate = $queryDuplicate->limit(3)->get();
+                $getDuplicate = $queryDuplicate->limit($limit)->get();
                 foreach ($getDuplicate as $key => $value) {
-                    if($value->getAttribute('username') == $request->input('username'))
+                    if(isset($user) && $user->id == $value->id) continue;
+                    if($value->username == $request->input('username'))
                     {
-                        if(isset($user) && $user->username == $value->getAttribute('username')) continue;
                         $validator->errors()->add('username', 'username.duplicate');
                     }
-                    if($value->getAttribute('email') == $request->input('email'))
+                    if($value->email == $request->input('email'))
                     {
-                        if(isset($user) && $user->email == $value->getAttribute('email')) continue;
                         $validator->errors()->add('email', 'email.duplicate');
                     }
-                    if($value->getAttribute('mobile') == $request->input('mobile'))
+                    if($value->mobile == $request->input('mobile'))
                     {
-                        if(isset($user) && $user->mobile == $value->getAttribute('mobile')) continue;
                         $validator->errors()->add('mobile', 'mobile.duplicate');
                     }
                 }
