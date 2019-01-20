@@ -36,7 +36,25 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         \Data::set('user_status_css', $this->user_status_css());
-        $users = $this->paginate_order($request, config('auth.providers.users.model')::select('*'), ['id', 'name', 'username', 'status', 'type', 'gender']);
+        \Data::set('userTypes', $this->user_types());
+        \Data::set('userStatus', $this->user_status());
+        $users = config('auth.providers.users.model')::select('*');
+        if(in_array($request->status, array_keys($this->user_status())))
+        {
+            $users->where('status', $request->status);
+        }
+
+        if(in_array($request->type, array_keys($this->user_types())))
+        {
+            $users->where('type', $request->type);
+        }
+
+        if(in_array($request->gender, ['male', 'female']))
+        {
+            $users->where('gender', $request->gender);
+        }
+
+        $users = $this->paginate_order($request, $users, ['id', 'name', 'username', 'status', 'type', 'gender']);
         \Data::set('users', $users);
         return $this->view('dashboard.users.index');
     }

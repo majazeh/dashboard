@@ -28,15 +28,29 @@
                                     {{ _d('mobile') }}
                                 </th>
                                 <th>
-                                    {{ _d('account.status') }}
+                                    <select name="status" data-lijax="change" data-state='true'>
+                                        <option {{!request()->status ? 'selected="selected"' : ''}} value="">{{_d('account.status')}}</option>
+                                        @foreach ($userStatus as $key => $status)
+                                            <option {{request()->status == $key ? 'selected="selected"' : ''}} value="{{$key}}">{{$status}}</option>
+                                        @endforeach
+                                    </select>
                                     @sort_icon(status)
                                 </th>
                                 <th>
-                                    {{ _d('account.type') }}
+                                    <select name="type" data-lijax="change" data-state='true'>
+                                        <option {{!request()->type ? 'selected="selected"' : ''}} value="">{{_d('account.type')}}</option>
+                                        @foreach ($userTypes as $key => $type)
+                                            <option {{request()->type == $key ? 'selected="selected"' : ''}} value="{{$key}}">{{$type}}</option>
+                                        @endforeach
+                                    </select>
                                     @sort_icon(type)
                                 </th>
                                 <th class="text-center">
-                                    {{ _d('gender') }}
+                                    <select name="gender" data-lijax="change" data-state='true'>
+                                        <option {{!request()->gender ? 'selected="selected"' : ''}} value="">{{_d('gender')}}</option>
+                                        <option {{request()->gender == 'female' ? 'selected="selected"' : ''}} value="female">{{_d('female')}}</option>
+                                        <option {{request()->gender == 'male' ? 'selected="selected"' : ''}} value="male">{{_d('male')}}</option>
+                                    </select>
                                     @sort_icon(gender)
                                 </th>
                                 <th></th>
