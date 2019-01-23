@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Validation\ValidationException;
 
 class RegisterController extends AuthController
 {
@@ -36,6 +37,12 @@ class RegisterController extends AuthController
 
     public function register(Request $request)
     {
+        if(!config('auth.enter.register', true))
+		{
+			throw ValidationException::withMessages([
+					$this->username_method() => [_d('auth.register.disabled')],
+				]);
+		}
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));
@@ -89,12 +96,8 @@ class RegisterController extends AuthController
                 'social_network_user' => $username,
                 'token'               => $token
             ]);
-            \Session::flash('registerMsg', 'Check your email!');
-            \Mail::send('emails.emailVerify', ['email' => $username, 'token' => $token], function ($message) use ($username)
-            {
-                $message->from(env('MAIL_USERNAME'), 'Hasan Salehi');
-                $message->to($username);
-            });
+            \Session::flash('registerMsg', _d('Check your email!'));
+            dispatch(new \Majazeh\Dashboard\Jobs\SendEmail('emails.verify', ['email' => $username, 'token' => $token, 'title' => _d('register.complate')]));
         }
         return $register;
     }

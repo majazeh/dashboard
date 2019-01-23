@@ -12,13 +12,51 @@ use Illuminate\Support\Facades\Mail;
 
 class LoginController extends AuthController
 {
-	use AuthenticatesUsers;
+	use AuthenticatesUsers {
+		login as auth_login;
+	}
 
 
 	public function __construct(Request $request)
 	{
 		$this->middleware('guest')->except('logout');
 		parent::__construct($request);
+	}
+
+
+	public function login(Request $request)
+	{
+		if($request->has('reset'))
+		{
+			if(!config('auth.enter.recovery', true))
+			{
+				throw ValidationException::withMessages([
+					$this->username() => [_d('auth.reset.disabled')],
+				]);
+			}
+			$request->request->add(['email' => $request->username]);
+			return (new ForgotPasswordController($request))->sendResetLinkEmail($request);
+
+			$check = $this->credentials($request);
+			unset($check['password']);
+			$user = config('auth.providers.users.model')::where($check)->first();
+			if(!$user)
+			{
+				throw ValidationException::withMessages([
+					$this->username() => [_d('auth.failed')],
+				]);
+			}
+			dispatch(new \Majazeh\Dashboard\Jobs\SendEmail('emails.verify', ['email' => $username, 'token' => $token]));
+            \Session::flash('registerMsg', _d('Check your email!'));
+			return $this->showLoginForm();
+		}
+		if(!config('auth.enter.login', true))
+		{
+			throw ValidationException::withMessages([
+					$this->username() => [_d('auth.login.disabled')],
+				]);
+		}
+		return $this->auth_login($request);
 	}
 
 	/**
@@ -119,11 +157,16 @@ class LoginController extends AuthController
 				$this->username() => [_d('auth.failed')],
 			]);
 		}
-		else
+		elseif(config('auth.enter.auto_register', true))
 		{
 			$register = new RegisterController();
 			$register->username_method = $this->username_method;
 			return $register->register($request);
+		}
+		else {
+			throw ValidationException::withMessages([
+				$this->username() => [trans('auth.failed')],
+			]);
 		}
 	}
 
