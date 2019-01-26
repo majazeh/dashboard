@@ -54,6 +54,16 @@ class UsersController extends Controller
             $users->where('gender', $request->gender);
         }
 
+        if($request->q)
+        {
+            $users->where(function($query) use ($request){
+                $query->where('username', 'like', "%{$request->q}%")
+                ->orWhere('name', 'like', "%{$request->q}%")
+                ->orWhere('email', 'like', "%{$request->q}%");
+            });
+        }
+
+
         $users = $this->paginate_order($request, $users, ['id', 'name', 'username', 'status', 'type', 'gender']);
         \Data::set('users', $users);
         return $this->view('dashboard.users.index');
