@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests,
-    Response, Paginate;
+    Response, Paginate, Validator, Extensions;
 
     public $icon = [
         'index' => 'fas fa-list-alt',
@@ -22,6 +22,11 @@ class Controller extends BaseController
     public function __construct(Request $request)
     {
         if(!\Route::getCurrentRoute()) return;
+        if(!isset($this->table))
+		{
+			preg_match("#\\\([^\\\]*[^s])s?Controller$#", get_class($this), $model_name);
+			$this->table = $model_name[1];
+		}
         $this->resource = isset($this->resource) ? $this->resource : $request->segment(2);
         \Data::setModule('resource', $this->resource);
         \Data::setGlobal('title', _d('title.dashio') . ' | ' . _d(\Route::getCurrentRoute()->getName()));
