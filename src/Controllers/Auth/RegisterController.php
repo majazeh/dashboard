@@ -43,7 +43,7 @@ class RegisterController extends AuthController
 					$this->username_method() => [_d('auth.register.disabled')],
 				]);
 		}
-        $this->validator($request->all())->validate();
+        $this->validator($request)->validate();
 
         event(new Registered($user = $this->create($request->all())));
         return $this->registered($request, $user)
@@ -56,7 +56,7 @@ class RegisterController extends AuthController
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    public function validator(Request $request, $update = false)
     {
         $validation = [
             'email'  => 'required|string|email|max:255|unique:users',
@@ -64,7 +64,7 @@ class RegisterController extends AuthController
         ];
         $username = $this->username_method() == 'username' ? 'email' : $this->username_method();
 
-        return Validator::make($data, [
+        return Validator::make($request->all(), [
             'password' => 'required|string|min:6',
             $username  => $validation[$username]
         ]);
