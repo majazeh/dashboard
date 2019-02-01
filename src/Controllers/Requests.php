@@ -19,7 +19,7 @@ trait Requests
 		{
 			$this->fast_search($request, $model);
 		}
-		\Data::set($list_name, $this->paginate_order($request, $model, ['id']));
+		\Data::set($list_name, $this->paginate_order($request, $model, isset($this->ordering) ? $this->ordering : ['id']));
 		return $this->view("{$this->resource}.index");
 	}
 
