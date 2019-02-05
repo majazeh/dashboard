@@ -21,15 +21,14 @@ class GuardioAuth extends Auth
 		$guardioConfig = config('guardio');
 
 		$groups = self::groups();
-
 		if(!self::$guardio)
 		{
-			self::$guardio = Guardio::whereIn('group', $groups)->get();
+			self::$guardio = GuardPosition::whereIn('guard', $groups)->get();
 		}
 
 		$permissions = [];
 		foreach ($groups as $key => $value) {
-			$permissions = array_merge($permissions, config("guardio.groups.{$value}"));
+			$permissions = array_merge($permissions, config("guardio.groups.{$value}") ?: []);
 		}
 		$permissions = array_unique($permissions);
 		foreach ($access as $key => $value) {
