@@ -39,7 +39,6 @@ class UsersController extends Controller
 
     public function access($method, $request, ...$args)
     {
-        dd(\Auth::guardio('user.view|user.create|user.edit'));
         switch ($method) {
 			case 'index':
 			case 'show' :
@@ -130,7 +129,6 @@ class UsersController extends Controller
     {
         $this->access_check('edit', ...func_get_args());
         $user = config('auth.providers.users.model')::findOrfail($user);
-        dd($user);
         if(\Auth::user()->type != 'admin' && \Auth::id() != $user->id)
         {
             return abort(404);
