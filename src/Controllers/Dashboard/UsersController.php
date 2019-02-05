@@ -30,11 +30,40 @@ class UsersController extends Controller
         'gender' => 'in:male,female',
     ];
 
+    public $templates = [
+        'index' => 'dashboard.users.index',
+        'show' => 'dashboard.users.index',
+        'create' => 'dashboard.users.index',
+        'edit' => 'dashboard.users.index',
+    ];
+
+    public function access($method, $request, ...$args)
+    {
+        dd(\Auth::guardio('user.view|user.create|user.edit'));
+        switch ($method) {
+			case 'index':
+			case 'show' :
+				return \Auth::guardio('user.view|user.create|user.edit');
+				break;
+			case 'create' :
+				return \Auth::guardio('user.create');
+				break;
+            case 'edit' :
+				return \Auth::guardio('user.edit|user.create') || \Auth::id() == $args[0];
+				break;
+			case 'delete' :
+				return \Auth::guardio('user.delete');
+				break;
+		}
+		return false;
+    }
+
     /**
      * Show all users
      */
     public function index(Request $request)
     {
+        $this->access_check('index', ...func_get_args());
         \Data::set('user_status_css', $this->user_status_css());
         \Data::set('userTypes', $this->user_types());
         \Data::set('userStatus', $this->user_status());
@@ -66,7 +95,7 @@ class UsersController extends Controller
 
         $users = $this->paginate_order($request, $users, ['id', 'name', 'username', 'status', 'type', 'gender']);
         \Data::set('users', $users);
-        return $this->view('dashboard.users.index');
+        return $this->view($this->templates['index']);
     }
 
     /**
@@ -74,21 +103,15 @@ class UsersController extends Controller
      */
     public function create(Request $request)
     {
-        if(\Auth::user()->type != 'admin')
-        {
-            return abort(404);
-        }
+        $this->access_check('create', ...func_get_args());
         \Data::set('userTypes', $this->user_types());
         \Data::set('userStatus', $this->user_status());
-        return $this->view('dashboard.users.create');
+        return $this->view($this->templates['create']);
     }
 
     public function store(Request $request)
     {
-        if(\Auth::user()->type != 'admin')
-        {
-            return abort(404);
-        }
+        $this->access_check('create', ...func_get_args());
         $this->validator($request)->validate();
         $data = $request->all();
         $data['password'] = Hash::make($request['password']);
@@ -105,7 +128,9 @@ class UsersController extends Controller
 
     public function edit(Request $request, $user)
     {
+        $this->access_check('edit', ...func_get_args());
         $user = config('auth.providers.users.model')::findOrfail($user);
+        dd($user);
         if(\Auth::user()->type != 'admin' && \Auth::id() != $user->id)
         {
             return abort(404);
@@ -114,7 +139,7 @@ class UsersController extends Controller
         \Data::set('id', $user->id);
         \Data::set('userTypes', $this->user_types());
         \Data::set('userStatus', $this->user_status());
-        return $this->view('dashboard.users.create');
+        return $this->view($this->templates['create']);
     }
 
     // public function show(Request $request, User $user)
@@ -124,11 +149,8 @@ class UsersController extends Controller
 
     public function update(Request $request, $user)
     {
+        $this->access_check('edit', ...func_get_args());
         $user = config('auth.providers.users.model')::findOrfail($user);
-        if(\Auth::user()->type != 'admin' && \Auth::id() != $user->id)
-        {
-            return abort(404);
-        }
         $this->validator($request, $user)->validate();
         $data = $request->all();
         if (\Auth::user()->type != 'admin') {
