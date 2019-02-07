@@ -129,10 +129,6 @@ class UsersController extends Controller
     {
         $this->access_check('edit', ...func_get_args());
         $user = config('auth.providers.users.model')::findOrfail($user);
-        if(\Auth::user()->type != 'admin' && \Auth::id() != $user->id)
-        {
-            return abort(404);
-        }
         \Data::set('user', $user);
         \Data::set('id', $user->id);
         \Data::set('userTypes', $this->user_types());
