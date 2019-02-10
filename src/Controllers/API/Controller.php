@@ -5,8 +5,9 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller as BaseController;
 
-class Controller {
+class Controller extends BaseController {
 	use AuthenticatesUsers, DispatchesJobs, ValidatesRequests,
     \Majazeh\Dashboard\Controllers\Response, \Majazeh\Dashboard\Controllers\Paginate;
 	public $successStatus = 200;

@@ -19,7 +19,7 @@ class MajazehDashboardProvider extends ServiceProvider
     {
         $this->publishes([__DIR__ . "/assets" => public_path('/')]);
 
-        require __DIR__.'/routes/web.php';
+        require __DIR__.'/routes/route.php';
         if(file_exists(base_path('routes/dashboard.php')))
         {
             require base_path('routes/dashboard.php');

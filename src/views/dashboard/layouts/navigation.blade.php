@@ -23,6 +23,10 @@
             <a class="d-none d-sm-block navigation-account-title" href="{{ route('users.edit', \Auth::id()) }}">
                 {{ \Auth::user() ? \Auth::user()->name : '' }}
             </a>
+            <a href="{{route('dashboard.notifications.index')}}" class="ml-1 border rounded-circle border-muted">
+                <span class="badge badge-pill badge-danger">10</span>
+                <i class="fal fa-bell p-2 text-muted"></i>
+            </a>
             <a tabindex='0'
              class='navigation-profile-image'
              role='button'
