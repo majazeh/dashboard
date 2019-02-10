@@ -13,9 +13,9 @@ use \App\FirebaseToken;
 class MessagingController extends Controller{
 	public $table = 'FirebaseToken';
 	public $validator = [
-		'token' => 'string',
+		'token' => 'required|string',
 		'user_id' => null,
-		'device' => 'in:android,web,ios',
+		'device' => 'required|in:web,ios,android,anonymous',
 		'service' => null,
 	];
 	public function __construct(Request $request)
@@ -35,7 +35,8 @@ class MessagingController extends Controller{
 	{
 		$request->request->add([
 			'service' => 'cloud_messaging',
-			'user_id' => \Auth::id()
+			'user_id' => \Auth::id(),
+			'device' => $request->header('client') ?: 'anonymous',
 		]);
 		return parent::store($request);
 	}
