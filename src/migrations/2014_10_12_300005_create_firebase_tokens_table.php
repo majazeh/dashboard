@@ -15,9 +15,10 @@ class CreateFirebaseTokensTable extends Migration
     {
         Schema::create('firebase_tokens', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('user_id');
+            $table->string('token');
+            $table->unsignedInteger('user_id')->nullable();
             $table->string('service');
-            $table->string('status');
+            $table->string('status')->default('active');
             $table->string('device');
             $table->string('descriptions')->nullable();
             $table->text('meta')->nullable();
