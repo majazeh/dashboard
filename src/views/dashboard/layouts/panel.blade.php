@@ -6,9 +6,12 @@
         <h2 class="mb-0 f3 page-head-title">
             {{ $module->header }}
         </h2>
-        <span class="f1 page-head-text">
-            {{ $module->desc ?: '' }}
-        </span>
+        <div class="f1 page-head-text">
+            <span>{{ $module->desc ?: '' }}</span>
+            @if (Breadcrumbs::exists(\Request::route()->getName()))
+                {{ Breadcrumbs::render(\Request::route()->getName(), \Data::all()) }}
+            @endif
+        </div>
     </div>
 
     <div class="d-flex page-head-actions" data-xhr="topbar-actions">

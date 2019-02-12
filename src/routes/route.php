@@ -1,4 +1,7 @@
 <?php
+
+require_once("breadcrumbs.php");
+
 Route::group(['middleware' => ['web']], function () {
 	require_once('web.php');
 });

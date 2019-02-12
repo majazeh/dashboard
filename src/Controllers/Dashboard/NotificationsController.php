@@ -16,7 +16,14 @@ class NotificationsController extends Controller
 
 	public $validator = [
         'title'  => 'required|string|min:3|unique:guards'
-    ];
+	];
+
+	public $ordering = [
+		'id',
+		'from' => 'from_id',
+		'to' => 'to_id',
+		'time' => 'created_at',
+	];
 
 	public function __construct(Request $request)
     {
