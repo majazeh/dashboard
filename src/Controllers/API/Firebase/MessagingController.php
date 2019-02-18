@@ -20,7 +20,7 @@ class MessagingController extends Controller{
 	];
 	public function __construct(Request $request)
 	{
-		if($request->header('Authorization'))
+		if($request->header('authorization'))
 		{
 			$this->middleware('auth:api');
 		}

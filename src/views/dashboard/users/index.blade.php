@@ -68,9 +68,7 @@
             <i class="fas fa-{{ $user->gender ?: 'genderless' }} {{ $user->gender == 'male' ? 'text-primary' : ($user->gender == 'female' ? 'text-info' : '')}}"></i>
         </td>
         <td class="text-center">
-            <a class="text-secondary" href="{{ route($module->resource . '.edit', $user->id) }}">
-                <i class="fas fa-edit"></i>
-            </a>
+            @include('dashboard.layouts.compomnents.edit-link', ['link' => route($module->resource . '.edit', $user->id)])
         </td>
     </tr>
     @endforeach

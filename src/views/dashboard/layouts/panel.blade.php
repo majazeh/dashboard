@@ -7,7 +7,9 @@
             {{ $module->header }}
         </h2>
         <div class="f1 page-head-text">
-            <span>{{ $module->desc ?: '' }}</span>
+            @if ($module->desc)
+                <span>{{ $module->desc ?: '' }}</span>
+            @endif
             @if (Breadcrumbs::exists(\Request::route()->getName()))
                 {{ Breadcrumbs::render(\Request::route()->getName(), \Data::all()) }}
             @endif

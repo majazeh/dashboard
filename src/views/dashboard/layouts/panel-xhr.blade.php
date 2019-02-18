@@ -5,11 +5,13 @@
                 {{ $module->header }}
             </h2>
             <div class="f1 page-head-text">
+            @if ($module->desc)
                 <span>{{ $module->desc ?: '' }}</span>
-                @if (Breadcrumbs::exists(\Request::route()->getName()))
-                    {{ Breadcrumbs::render(\Request::route()->getName(), \Data::all()) }}
-                @endif
-            </div>
+            @endif
+            @if (Breadcrumbs::exists(\Request::route()->getName()))
+                {{ Breadcrumbs::render(\Request::route()->getName(), \Data::all()) }}
+            @endif
+        </div>
         </div>
         <div class="d-flex page-head-actions" data-xhr="topbar-actions">
             @yield('topbar-actions')
