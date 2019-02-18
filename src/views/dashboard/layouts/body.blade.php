@@ -12,9 +12,11 @@
     @show
 
     <div class="d-flex body-content">
-        @section('body-desktop')
-            @include('dashboard.layouts.desktop')
-        @show
+        @if (false)
+            @section('body-desktop')
+                @include('dashboard.layouts.desktop')
+            @show
+        @endif
 
         @section('body-main')
             @include('dashboard.layouts.main')

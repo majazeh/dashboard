@@ -19,6 +19,9 @@
 (function () {
     function lijax(context) {
         var back_value = $(context).val() || $(context).attr('data-value');
+        if ($(context).is(':checkbox')) {
+            back_value = $(context).is(':checked') ? 1 : 0;
+        }
         var Timeout = null;
         var fire = null;
         if ($(context).is('form') && !$(context).attr('data-lijax')) {
@@ -63,6 +66,9 @@
                 state = false;
             } else {
                 value = $(context).val() || $(context).attr('data-value');
+                if ($(context).is(':checkbox')) {
+                    value = $(context).is(':checked') ? 1 : 0;
+                }
                 if (back_value == value && $(context).is('input, textarea, select')) return;
                 back_value = value;
                 var data = {};

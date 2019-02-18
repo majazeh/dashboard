@@ -6,11 +6,11 @@
 </head>
 
 @section('body-tag')
-<body class="d-flex rtl">
-    @section('body')
-    @include('dashboard.layouts.body')
-    @show
-</body>
+    <body class="d-flex rtl">
+        @section('body')
+            @include('dashboard.layouts.body')
+        @show
+    </body>
 @show
 
 </html>
