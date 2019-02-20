@@ -6,8 +6,8 @@
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendors/bootstrap4-rtl/bootstrap4-rtl.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendors/fontawesome-pro-5.7.1/css/all.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ asset('vendors/iziToast/css/iziToast.min.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/dashio.min.css') . '?v=' . filemtime(public_path('js/main.js'))  }}">
-	<link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') . '?v=' . filemtime(public_path('js/main.js'))  }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dashio.min.css') . '?v=' . filemtime(public_path('css/dashio.min.css'))  }}">
+	<link rel="stylesheet" type="text/css" href="{{ asset('css/main.css') . '?v=' . filemtime(public_path('css/main.css'))  }}">
 @show
 
 <title>{{ $global->title ?: _d('Dashio') }}</title>
