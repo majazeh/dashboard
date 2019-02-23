@@ -136,6 +136,7 @@ trait Requests
 		$return = [
 			'message' => $this->table . " created successfully",
 			'data' => $create,
+			'redirect' => route("{$this->resource}.create")
 		];
 
 		if(\Route::has($this->resource . '.show'))
