@@ -32,9 +32,9 @@ class UsersController extends Controller
 
     public $templates = [
         'index' => 'dashboard.users.index',
-        'show' => 'dashboard.users.index',
-        'create' => 'dashboard.users.index',
-        'edit' => 'dashboard.users.index',
+        'show' => 'dashboard.users.create',
+        'create' => 'dashboard.users.create',
+        'edit' => 'dashboard.users.create',
     ];
 
     public function access($method, $request, ...$args)
