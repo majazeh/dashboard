@@ -99,7 +99,15 @@ trait Requests
 		}
 		$table = $this->findOrFail($id);
 		$table->delete();
-		return $this->response($this->table . ' deleted');
+		$response = $this->response_destroy($request, $table, $parent);
+		return $this->response($response);
+	}
+	public function response_destroy($request, $id, $parent)
+	{
+		return [
+			'message' => $this->table . ' deleted',
+			'redirect' => route("{$this->resource}.index")
+		];
 	}
 
 	public function store(Request $request)
@@ -120,6 +128,11 @@ trait Requests
 			}
 		}
 		$create = $this->get_model()::create($data);
+		$response = $this->response_store($request, $create, $parent);
+		return $this->response($response);
+	}
+	public function response_store($request, $create, $parent)
+	{
 		$return = [
 			'message' => $this->table . " created successfully",
 			'data' => $create,
@@ -129,7 +142,7 @@ trait Requests
 		{
 			$return['redirect'] = route($this->resource . '.show', [$parent ? $parent : $create->id, $parent ? $create->id : null]);
 		}
-		return $this->response($return);
+		return $return;
 	}
 
 	public function update(Request $request, $id)
@@ -153,17 +166,23 @@ trait Requests
 			$table->$key = $value;
 		}
 		$table->save();
+		$response = $this->response_update($request, $table, $parent, $original_all);
+		return $this->response($response);
+	}
+	public function response_update($request, $table, $parent, $original_all)
+	{
 		$changed = $table->getChanges();
 		$original = [];
 		foreach ($changed as $key => $value) {
 			$original[$key] = $original_all[$key];
 		}
-		return $this->response([
+		$return = [
 			'message' => empty($changed) ? "Unchanged" : substr($table->getTable(), 0, -1) . " changed successfully",
 			'old' => empty($changed) ? null : $original,
 			'changed' => empty($changed) ? null : $changed,
 			'data' => $table
-		]);
+		];
+		return $return;
 	}
 }
 ?>
