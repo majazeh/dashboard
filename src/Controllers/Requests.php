@@ -13,7 +13,7 @@ trait Requests
 			$parent = $this->getParent()::findOrFail($parent);
 			\Data::set(strtolower($this->parent), $parent);
 		}
-		$list_name = str_plural($this->table);
+		$list_name = strtolower(str_plural($this->table));
 		$model = $this->index_query($request, $parent ?: null);
 		if($request->q)
 		{
