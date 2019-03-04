@@ -11,7 +11,6 @@ class Controller extends BaseController {
 	use AuthenticatesUsers, DispatchesJobs, ValidatesRequests,
     \Majazeh\Dashboard\Controllers\Response, \Majazeh\Dashboard\Controllers\Paginate;
 	public $successStatus = 200;
-	public $validator = [];
 
 	public function __construct()
 	{

@@ -97,7 +97,7 @@ trait Requests
 		{
 			$this->getParent()::findOrFail($parent);
 		}
-		$table = $this->findOrFail($id);
+		$table = $this->show_query($request, $id, $parent);
 		$table->delete();
 		$response = $this->response_destroy($request, $table, $parent);
 		return $this->response($response);
@@ -159,7 +159,7 @@ trait Requests
 		{
 			$this->getParent()::findOrFail($parent);
 		}
-		$table = $this->findOrFail($id);
+		$table = $this->show_query($request, $id, $parent);
 		$this->validator($request, $table)->validate();
 		$this->validated($request, $table);
 		$original_all = $table->toArray();

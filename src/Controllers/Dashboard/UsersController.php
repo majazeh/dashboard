@@ -66,7 +66,7 @@ class UsersController extends Controller
         \Data::set('user_status_css', $this->user_status_css());
         \Data::set('userTypes', $this->user_types());
         \Data::set('userStatus', $this->user_status());
-        $users = config('auth.providers.users.model')::select('*');
+        $users = $this->index_query($request);
         if(in_array($request->status, array_keys($this->user_status())))
         {
             $users->where('status', $request->status);
@@ -96,6 +96,11 @@ class UsersController extends Controller
         \Data::set('users', $users);
         return $this->view($this->templates['index']);
     }
+
+    public function index_query($request, $parent = null)
+	{
+        return config('auth.providers.users.model')::select('*');
+	}
 
     /**
      * Show user creation form
