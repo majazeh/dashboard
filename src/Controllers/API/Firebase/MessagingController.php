@@ -33,12 +33,44 @@ class MessagingController extends Controller{
 
 	public function store(Request $request)
 	{
+		$duplicate = FirebaseToken::where('token', $request->token)->count();
+		if($duplicate)
+		{
+			$this->destroy($request, $request->token);
+		}
+		$request->token;
 		$request->request->add([
 			'service' => 'cloud_messaging',
 			'user_id' => \Auth::id(),
 			'device' => $request->header('client') ?: 'anonymous',
 		]);
-		return parent::store($request);
+		$return = '';
+		try {
+			$return = parent::store($request);
+            dispatch(new \Majazeh\Dashboard\Jobs\CloudMessage('https://iid.googleapis.com/iid/v1:batchAdd', [
+				"to" => "/topics/global",
+				"registration_tokens" => [$request->token]
+			]));
+		} catch (\Throwable $th) {
+		}
+		return $return;
+	}
+
+	public function update(Request $request, $token)
+	{
+
+	}
+
+	public function show(Request $request, $token)
+	{
+
+	}
+
+	public function destroy(Request $request, $token)
+	{
+		$token = FirebaseToken::where('token', $token);
+		$token->delete();
+		return $this->response($this->table . " deleted");
 	}
 
 }
