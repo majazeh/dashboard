@@ -7,15 +7,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Notification;
-
+use \Majazeh\Dashboard\Controllers\Requests;
+use \App\FirebaseToken;
 
 class NotificationsController extends Controller
 {
-	use \Majazeh\Dashboard\Controllers\Requests;
+	use Requests
+	{
+		Requests::store as request_store;
+	}
 	public $resource = 'dashboard.notifications';
 
 	public $validator = [
-        'title'  => 'required|string|min:3|unique:guards'
+				'title'  => 'required|string|min:3',
+				'from_id'  => 'required',
+				'to_id'  => 'required',
+				'services'  => 'required',
+				'content'  => 'required',
+				'trigger'  => 'required',
 	];
 
 	public $ordering = [
@@ -26,7 +35,7 @@ class NotificationsController extends Controller
 	];
 
 	public function __construct(Request $request)
-    {
+		{
 		parent::__construct($request);
 	}
 
@@ -53,6 +62,29 @@ class NotificationsController extends Controller
 				break;
 		}
 		return false;
+	}
+
+	public function store(Request $request)
+	{
+		$request->request->add(['from_id' => \Auth::id()]);
+		$request->request->add(['trigger' => 'global']);
+		$return = $this->request_store($request);
+		if($request->services == 'google')
+		{
+			foreach (FirebaseToken::where('user_id', $request->to_id)->get() as $key => $value) {
+					dispatch(new \Majazeh\Dashboard\Jobs\CloudMessage('https://fcm.googleapis.com/fcm/send', [
+							"to" => $value->token,
+							"notification" => [
+								"title" => $request->title,
+								"body" => $request->content,
+								"priority" => "high",
+								"content_available" => true,
+								"sound" => "default",
+								]
+					]));
+			}
+		}
+		return $return;
 	}
 
 	public function fast_search($request, &$model)
