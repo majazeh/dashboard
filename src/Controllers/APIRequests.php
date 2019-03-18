@@ -90,7 +90,7 @@ trait APIRequests
 		$create = $this->get_model()::create($data);
 		$this->response->put('message', $this->table . " created successfully");
 		$this->response->put('data', $create);
-		return $this->response($response);
+		return $this->response($this->response);
 	}
 
 	public function update(Request $request, $id)
