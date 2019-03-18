@@ -9,10 +9,12 @@
                 <i class="fas fa-tachometer-alt"></i>
                 <span>{{ _d('Dashboard') }}</span>
             </a>
-            <a class="d-flex flex-column justify-content-center align-items-center menu-item" href="{{ route('users.index') }}">
-                <i class="fas fa-users"></i>
-                <span>{{ _d('Users') }}</span>
-            </a>
+            @if (\Auth::guardio('user.all'))
+                <a class="d-flex flex-column justify-content-center align-items-center menu-item" href="{{ route('users.index') }}">
+                    <i class="fas fa-users"></i>
+                    <span>{{ _d('Users') }}</span>
+                </a>
+            @endif
         @show
     </div>
 </div>
