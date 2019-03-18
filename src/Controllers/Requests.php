@@ -106,7 +106,7 @@ trait Requests
 	{
 		return [
 			'message' => $this->table . ' deleted',
-			'redirect' => route("{$this->resource}.index")
+			'redirect' => route("{$this->resource}.index", $parent ?: null)
 		];
 	}
 
@@ -135,9 +135,13 @@ trait Requests
 	{
 		$return = [
 			'message' => $this->table . " created successfully",
-			'data' => $create,
-			'redirect' => route("{$this->resource}.create")
+			'data' => $create
 		];
+
+		if(\Route::has($this->resource . '.create'))
+		{
+			$return['redirect'] = route($this->resource . '.create');
+		}
 
 		if(\Route::has($this->resource . '.show'))
 		{

@@ -178,7 +178,8 @@ class UsersController extends Controller
             return response()->json([
                 'is_ok' => true,
                 'message' => __('USER_CHANGED_SUCCESSFULLY'),
-                'redirect' => route(\Data::getModule('resource').'.index')
+                'redirect' => route(\Data::getModule('resource').'.index'),
+                'direct' => true
             ]);
         }
         return redirect(route(\Data::getModule('resource').'.edit', $user->id));
