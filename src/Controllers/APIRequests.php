@@ -127,5 +127,20 @@ trait APIRequests
 		$response = $this->response_update($request, $table, $parent, $original_all);
 		return $this->response($this->response);
 	}
+	public function response_update($request, $table, $parent, $original_all)
+	{
+		$changed = $table->getChanges();
+		$original = [];
+		foreach ($changed as $key => $value) {
+			$original[$key] = $original_all[$key];
+		}
+		$return = [
+			'message' => empty($changed) ? "Unchanged" : substr($table->getTable(), 0, -1) . " changed successfully",
+			'old' => empty($changed) ? null : $original,
+			'changed' => empty($changed) ? null : $changed,
+			'data' => $table
+		];
+		return $return;
+	}
 }
 ?>
