@@ -37,7 +37,11 @@
                     <button type="submit" class="btn btn-block btn-primary btn-gradient">{{ ucfirst(_d('reset.password')) }}</button>
                     <a href="{{route('login')}}" class="btn btn-block btn-success btn-gradient">{{ ucfirst(_d('login')) }} / {{ ucfirst(_d('register')) }}</a>
                 @else
-                    <button type="submit" class="btn btn-block btn-primary btn-gradient">{{ ucfirst(_d('login')) }} / {{ ucfirst(_d('register')) }}</button>
+                    <button type="submit" class="btn btn-block btn-primary btn-gradient">{{ ucfirst(_d('login')) }}
+                        @if (config('auth.enter.revovery', false))
+                        / {{ ucfirst(_d('register')) }}
+                        @endif
+                    </button>
                     @if (config('auth.enter.revovery', true))
                     <button name="reset" value="true" type="submit" class="btn btn-block btn-secondary btn-gradient">{{ _d('Password reset') }}</button>
                     @endif
