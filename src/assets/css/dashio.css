@@ -781,6 +781,31 @@ body[data-page="login"], body[data-page="register"] {
   width: 5px;
   height: 9px; }
 
+form.lijax-sending {
+  opacity: .7; }
+  form.lijax-sending [type=submit]::after {
+    content: "\f110";
+    font-family: "Font Awesome 5 Pro";
+    display: inline-block;
+    -webkit-animation: rotate-center 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+    animation: rotate-center 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite; }
+
+@-webkit-keyframes rotate-center {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0); }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+
+@keyframes rotate-center {
+  0% {
+    -webkit-transform: rotate(0);
+    transform: rotate(0); }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg); } }
+
 .bg-alert-icon {
   background-color: rgba(255, 255, 255, 0.3); }
 
