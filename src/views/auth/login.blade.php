@@ -12,7 +12,7 @@
             @csrf
             <div class="form-group">
                 <div class="form-input">
-                    <input class="form-control {{ $errors->hasAny(['username', 'email', 'mobile']) ? 'is-invalid' : '' }}" type="text" name="username" id="username" placeholder="{{ ucfirst(_d('mobile')) }}">
+                    <input class="form-control {{ $errors->hasAny(['username', 'email', 'mobile']) ? 'is-invalid' : '' }}" type="text" name="username" id="username" placeholder="{{ ucfirst(_d('username')) }}">
                     <label class="form-icon" for="username" data-toggle="tooltip" data-placement="auto" title="{{ ucfirst(_d('mobile')) }}"><i class="fas fa-user"></i></label>
                     @if ($errors->hasAny(['username', 'email', 'mobile']))
                     <div class="invalid-feedback">{{ $errors->first('username') | $errors->first('email') | $errors->first('mobile') }}</div>
