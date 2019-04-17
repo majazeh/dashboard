@@ -2,7 +2,11 @@
 
 function _d($text, $args = []){
 	$trans = __("$text");
-	return $trans == "$text" ? $text : $trans;
+	if(is_string($trans))
+	{
+		return $trans == $text ? $text : $trans;
+	}
+	return $text;
 }
 
 function order_link($order, $sort)
