@@ -38,11 +38,11 @@
                     <a href="{{route('login')}}" class="btn btn-block btn-success btn-gradient">{{ ucfirst(_d('login')) }} / {{ ucfirst(_d('register')) }}</a>
                 @else
                     <button type="submit" class="btn btn-block btn-primary btn-gradient">{{ ucfirst(_d('login')) }}
-                        @if (config('auth.enter.revovery', false))
+                        @if (config('auth.enter.register', false))
                         / {{ ucfirst(_d('register')) }}
                         @endif
                     </button>
-                    @if (config('auth.enter.revovery', true))
+                    @if (config('auth.enter.revovery', false))
                     <button name="reset" value="true" type="submit" class="btn btn-block btn-secondary btn-gradient">{{ _d('Password reset') }}</button>
                     @endif
                     @if (config('services.google.client_id'))
