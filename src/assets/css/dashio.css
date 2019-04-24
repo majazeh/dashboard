@@ -5,6 +5,27 @@ Author: Majazeh
 Author URI: https://majazeh.ir
 */
 @font-face {
+  font-family: Anjoman;
+  font-style: normal;
+  font-weight: bold;
+  src: url("../fonts/Anjoman/eot/Anjoman-Bold.eot");
+  src: url("../fonts/Anjoman/eot/Anjoman-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/Anjoman/woff2/Anjoman-Bold.woff2") format("woff2"), url("../fonts/Anjoman/woff/Anjoman-Bold.woff") format("woff"), url("../fonts/Anjoman/ttf/Anjoman-Bold.ttf") format("truetype"); }
+
+@font-face {
+  font-family: Anjoman;
+  font-style: normal;
+  font-weight: 300;
+  src: url("../fonts/Anjoman/eot/Anjoman-Light.eot");
+  src: url("../fonts/Anjoman/eot/Anjoman-Light.eot?#iefix") format("embedded-opentype"), url("../fonts/Anjoman/woff2/Anjoman-Light.woff2") format("woff2"), url("../fonts/Anjoman/woff/Anjoman-Light.woff") format("woff"), url("../fonts/Anjoman/ttf/Anjoman-Light.ttf") format("truetype"); }
+
+@font-face {
+  font-family: Anjoman;
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/Anjoman/eot/Anjoman-Regular.eot");
+  src: url("../fonts/Anjoman/eot/Anjoman-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/Anjoman/woff2/Anjoman-Regular.woff2") format("woff2"), url("../fonts/Anjoman/woff/Anjoman-Regular.woff") format("woff"), url("../fonts/Anjoman/ttf/Anjoman-Regular.ttf") format("truetype"); }
+
+@font-face {
   font-family: IRAN;
   font-style: normal;
   font-weight: bold;
@@ -181,6 +202,9 @@ html[lang="fa"] body {
 
 html[lang='ar'] body {
   font-family: SallaArabic; }
+
+.font-anjoman {
+  font-family: Anjoman !important; }
 
 .font-iran {
   font-family: IRAN !important; }
