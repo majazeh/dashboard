@@ -104,10 +104,14 @@ trait Requests
 	}
 	public function response_destroy($request, $id, $parent)
 	{
-		return [
+		$return = [
 			'message' => $this->table . ' deleted',
-			'redirect' => route("{$this->resource}.index", $parent ?: null)
 		];
+		if(\Route::has("{$this->resource}.index", $parent ?: null))
+		{
+			$return['redirect'] = route("{$this->resource}.index", $parent ?: null);
+		}
+		return $return;
 	}
 
 	public function store(Request $request)
