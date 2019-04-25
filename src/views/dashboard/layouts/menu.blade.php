@@ -1,16 +1,25 @@
 <div class="d-none flex-column d-md-block menu" id="menu">
-    <a class="d-flex justify-content-center align-items-center branding-logo" href="{{ route('dashboard') }}">
-        <img src="{{ asset('images/logo/logo-40.png') }}" alt="{{ $global->title ?: _d('Dashio') }}" width="40" height="40">
+    @if (false)
+        <a class="d-flex justify-content-center align-items-center branding-logo" href="{{ route('dashboard') }}">
+            <img src="{{ asset('images/logo/logo-40.png') }}" alt="{{ $global->title ?: _d('Dashio') }}" width="40" height="40">
+        </a>
+    @endif
+
+    <a href="{{ route('dashboard') }}" class="branding" title="{{ _d('title.dashio') }}">
+        <img src="{{ asset('images/logo/logo-40.png') }}" class="branding-logo" alt="{{ $global->title ?: _d('Dashio') }}" width="40" height="40">
+        <div class="branding-title">
+            {{ _d('title.dashio') }}
+        </div>
     </a>
 
     <div class="menu-inner">
         @section('menu-itmes')
-            <a class="d-flex flex-column justify-content-center align-items-center menu-item" href="{{ route('dashboard') }}">
+            <a class="d-flex align-items-center menu-item" href="{{ route('dashboard') }}">
                 <i class="fas fa-tachometer-alt"></i>
                 <span>{{ _d('Dashboard') }}</span>
             </a>
             @if (\Auth::guardio('user.all'))
-                <a class="d-flex flex-column justify-content-center align-items-center menu-item" href="{{ route('users.index') }}">
+                <a class="d-flex align-items-center menu-item" href="{{ route('users.index') }}">
                     <i class="fas fa-users"></i>
                     <span>{{ _d('Users') }}</span>
                 </a>

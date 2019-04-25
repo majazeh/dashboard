@@ -1,9 +1,11 @@
 <div class="d-flex align-items-center navigation">
-    <div class="d-none d-md-block branding-title">
-        <a class="font-weight-bold" href="{{ route('dashboard') }}" title="{{ _d('title.dashio') }}">
-            {{ _d('title.dashio') }}
-        </a>
-    </div>
+    @if (false)
+        <div class="d-none d-md-block branding-title">
+            <a class="font-weight-bold" href="{{ route('dashboard') }}" title="{{ _d('title.dashio') }}">
+                {{ _d('title.dashio') }}
+            </a>
+        </div>
+    @endif
 
     <div class="flex-grow-1 d-flex justify-content-between navigation-inner">
         <div class="d-flex align-items-center navigation-search">
