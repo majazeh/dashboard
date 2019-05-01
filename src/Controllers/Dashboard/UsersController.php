@@ -84,17 +84,22 @@ class UsersController extends Controller
 
         if($request->q)
         {
-            $users->where(function($query) use ($request){
-                $query->where('username', 'like', "%{$request->q}%")
-                ->orWhere('name', 'like', "%{$request->q}%")
-                ->orWhere('email', 'like', "%{$request->q}%");
-            });
+			$this->fast_search($request, $users);
         }
 
 
         $users = $this->paginate_order($request, $users, ['id', 'name', 'username', 'status', 'type', 'gender']);
         \Data::set('users', $users);
         return $this->view($this->templates['index']);
+    }
+
+    public function fast_search($request, &$model)
+    {
+        $model->where(function($query) use ($request){
+            $query->where('username', 'like', "%{$request->q}%")
+            ->orWhere('name', 'like', "%{$request->q}%")
+            ->orWhere('email', 'like', "%{$request->q}%");
+        });
     }
 
     public function index_query($request, $parent = null)
