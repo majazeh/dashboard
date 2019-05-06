@@ -89,6 +89,7 @@ class UsersController extends Controller
 
 
         $users = $this->paginate_order($request, $users, ['id', 'name', 'username', 'status', 'type', 'gender']);
+        $users->appends($request->all('status', 'type'));
         \Data::set('users', $users);
         return $this->view($this->templates['index']);
     }
