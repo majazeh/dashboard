@@ -14,8 +14,9 @@ trait Paginate
 		$sorts = explode(',', $sort_string);
 		foreach($orders as $key => $order)
 		{
-			if(isset($order_list[$order]))
+			if(isset($order_list[$order]) || in_array($order, $order_list))
 			{
+				$order = isset($order_list[$order]) ? $order_list[$order] : $order;
 				$sort = isset($sorts[$key]) && in_array(strtolower($sorts[$key]), ['asc', 'desc']) ? strtolower($sorts[$key]) : 'desc';
 				$model->orderBy($order, $sort);
 			}
