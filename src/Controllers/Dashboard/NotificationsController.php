@@ -48,17 +48,17 @@ class NotificationsController extends Controller
 				// return \Auth::guardio('notification.view|notification.create|guarnotificationdnotificationio.edit');
 				break;
 			case 'create' :
-				return \Auth::guardio('notification.create|#broker');
+				return \Auth::guardio('notifications.create');
 				break;
 			case 'edit' :
-				return \Auth::guardio('notification.edit|notification.create|#broker');
+				return \Auth::guardio('notifications.edit|notifications.create');
 				break;
 			case 'delete' :
-				return \Auth::guardio('notification.delete|#broker');
+				return \Auth::guardio('notifications.delete');
 				break;
 
 			case 'check' :
-				return \Auth::guardio('notification.all|#broker') || $args[1]->from_id == \Auth::id() || $args[1]->to_id == \Auth::id();
+				return \Auth::guardio('notifications.all') || $args[1]->from_id == \Auth::id() || $args[1]->to_id == \Auth::id();
 				break;
 		}
 		return false;

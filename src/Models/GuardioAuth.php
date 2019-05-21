@@ -38,7 +38,7 @@ class GuardioAuth extends Auth
 				$OrValue = explode('|', $value);
 				$check = false;
 				foreach ($OrValue as $okey => $ovalue) {
-					if(substr($ovalue, 0, 1) == '#')
+					if(substr($ovalue, 0, 1) == '@')
 					{
 						if(self::inGroup(substr($ovalue, 1)))
 						{
@@ -60,7 +60,7 @@ class GuardioAuth extends Auth
 				}
 				continue;
 			}
-			elseif(substr($value, 0, 1) == '#')
+			elseif(substr($value, 0, 1) == '@')
 			{
 				if(!self::inGroup(substr($value, 1)))
 				{

@@ -33,10 +33,13 @@
                                    </label>
                                </td>
                                <td>
-                                <label class="switch">
-                                    <input type="checkbox" {{ $position ? 'checked' : '' }} data-lijax='change' data-method='PATCH' data-action='{{route('dashboard.guards.positions.update', [$guard->id, $key])}}' data-name='status' id="for-{{$key}}">
-                                    <span class="slider round"></span>
-                                </label>
+                                    @if (config('guardio.groups.' . $guard->title) && in_array($key, config('guardio.groups.' . $guard->title)))
+                                    @else
+                                    <label class="switch">
+                                        <input type="checkbox" {{ $position ? 'checked' : '' }} data-lijax='change' data-method='PATCH' data-action='{{route('dashboard.guards.positions.update', [$guard->id, $key])}}' data-name='status' id="for-{{$key}}">
+                                        <span class="slider round"></span>
+                                    </label>
+                                    @endif
                                </td>
                             </tr>
                         @endforeach
