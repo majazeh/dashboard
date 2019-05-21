@@ -1,4 +1,4 @@
-@if (Auth::user()->type == 'admin')
+@if (\Auth::guardio('user.change.status'))
 <div class="form-group">
     <label>{{ _d('account.status') }}</label>
     @foreach ($userStatus as $type => $value)
