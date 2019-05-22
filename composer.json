@@ -22,7 +22,6 @@
         {
             "providers": [
                 "Majazeh\\Dashboard\\MajazehDashboardProvider",
-                "Majazeh\\Dashboard\\MajazehDashboardRouteProvider",
                 "Majazeh\\Dashboard\\MajazehAuthServiceProvider"
             ]
         }
