@@ -39,7 +39,8 @@ trait APIRequests
 		}
 		if($parent)
 		{
-			$this->response->put(strtolower($this->parent), $this->getParent()::findOrFail($parent));
+			$parent = $this->getParent()::findOrFail($parent);
+			$this->response->put(strtolower($this->parent), $parent);
 		}
 		$table = $this->show_query($request, $id, $parent);
 		$this->response->put('data', $table);
@@ -62,7 +63,8 @@ trait APIRequests
 		}
 		if($parent)
 		{
-			$this->response->put(strtolower($this->parent), $this->getParent()::findOrFail($parent));
+			$parent = $this->getParent()::findOrFail($parent);
+			$this->response->put(strtolower($this->parent), $parent);
 		}
 		$table = $this->show_query($request, $id, $parent);
 		$table->delete();
@@ -76,10 +78,11 @@ trait APIRequests
 		$parent = isset($this->parent) && isset(func_get_args()[1]) ? func_get_args()[1] : null;
 		if($parent)
 		{
-			$this->response->put(strtolower($this->parent), $this->getParent()::findOrFail($parent));
+			$parent = $this->getParent()::findOrFail($parent);
+			$this->response->put(strtolower($this->parent), $parent);
 		}
-		$this->validator($request)->validate();
-		$this->validated($request);
+		$this->validator($request, false, $parent)->validate();
+		$this->validated($request, false, $parent);
 		$data = [];
 		foreach ($this->get_fields('keys', $request) as $key => $value) {
 			if($request->input($value))
@@ -87,10 +90,15 @@ trait APIRequests
 				$data[$value] = $request->input($value);
 			}
 		}
-		$create = $this->get_model()::create($data);
+		// $create = $this->get_model()::create($data);
+		$create = $this->store_transaction($request, $data, $parent);
 		$this->response->put('message', $this->table . " created successfully");
 		$this->response->put('data', $create);
 		return $this->response($this->response);
+	}
+
+	public function store_transaction($request, $data, &$parent = null){
+		return $this->get_model()::create($data);
 	}
 
 	public function update(Request $request, $id)
@@ -104,16 +112,18 @@ trait APIRequests
 		}
 		if($parent)
 		{
-			$this->response->put(strtolower($this->parent), $this->getParent()::findOrFail($parent));
+			$parent = $this->getParent()::findOrFail($parent);
+			$this->response->put(strtolower($this->parent), $parent);
 		}
-		$table = $this->show_query($request, $id, $parent);
-		$this->validator($request, $table)->validate();
-		$this->validated($request, $table);
-		$original_all = $table->toArray();
+		$row = $this->show_query($request, $id, $parent);
+		$this->validator($request, $row, $parent)->validate();
+		$this->validated($request, $row, $parent);
+		$original_all = $row->toArray();
 		foreach ($this->get_fields('inputs', $request, true) as $key => $value) {
-			$table->$key = $value;
+			$row->$key = $value;
 		}
-		$table->save();
+		// $table->save();
+		$this->update_transaction($request, $row, $parent);
 		$changed = $table->getChanges();
 		$original = [];
 		foreach ($changed as $key => $value) {
@@ -127,6 +137,11 @@ trait APIRequests
 		$response = $this->response_update($request, $table, $parent, $original_all);
 		return $this->response($this->response);
 	}
+
+	public function update_transaction($request, &$row, &$parent = null){
+		return $row->save();
+	}
+
 	public function response_update($request, $table, $parent, $original_all)
 	{
 		$changed = $table->getChanges();
