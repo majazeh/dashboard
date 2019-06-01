@@ -71,7 +71,8 @@ trait Requests
 		$parent = isset($this->parent) && isset(func_get_args()[1]) ? func_get_args()[1] : null;
 		if($parent)
 		{
-			\Data::set(strtolower($this->parent), $this->getParent()::findOrFail($parent));
+			$parent = $this->getParent()::findOrFail($parent);
+			\Data::set(strtolower($this->parent), $parent);
 		}
 		return $this->create_view($request, $parent, ...array_splice($args, 2));
 	}
@@ -161,7 +162,7 @@ trait Requests
 	}
 
 	public function store_transaction($request, $data, &$parent = null){
-		$this->get_model()::create($data);
+		return $this->get_model()::create($data);
 	}
 	public function response_store($request, $create, $parent)
 	{
@@ -207,7 +208,7 @@ trait Requests
 		return $this->response($response);
 	}
 	public function update_transaction($request, &$row, &$parent = null){
-		$row->save();
+		return $row->save();
 	}
 	public function response_update($request, $table, $parent, $original_all)
 	{
