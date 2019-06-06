@@ -1,5 +1,5 @@
 @extends('dashboard.layouts.index')
-@if(!\Auth::guardio('notification.edit|notification.create|#broker'))
+@if(!\Auth::guardio('notifications.edit|notifications.create'))
 @section('topbar-actions')@show
 @endif
 @section('users-list')
