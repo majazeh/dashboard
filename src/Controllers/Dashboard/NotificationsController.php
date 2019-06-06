@@ -71,19 +71,19 @@ class NotificationsController extends Controller
 		$return = $this->request_store($request);
 		if($request->services == 'google')
 		{
-			foreach (FirebaseToken::where('user_id', $request->to_id)->get() as $key => $value) {
-					dispatch(new \Majazeh\Dashboard\Jobs\CloudMessage('https://fcm.googleapis.com/fcm/send', [
-							"to" => $value->token,
-							"notification" => [
-								"title" => $request->title,
-								"body" => $request->content,
-								"priority" => "high",
-								"content_available" => true,
-								"sound" => "default",
-								]
-					]));
-			}
-		}
+            $user_token = FirebaseToken::where('user_id', $request->to_id)->get()->pluck('token')->toArray();
+
+                dispatch(new \Majazeh\Dashboard\Jobs\CloudMessage('https://fcm.googleapis.com/fcm/send', [
+                    "registration_ids" => $user_token,
+                    "notification" => [
+                        "title" => $request->title,
+                        "body" => $request->content,
+                        "priority" => "high",
+                        "content_available" => true,
+                        "sound" => "default",
+                    ]
+                ]));
+        }
 		return $return;
 	}
 
