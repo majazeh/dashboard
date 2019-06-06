@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Mail;
 use \App\FirebaseToken;
+
 class CloudMessage implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -47,7 +48,7 @@ class CloudMessage implements ShouldQueue
             foreach ($body->results as $key => $value) {
                 if(isset($value->error) && $value->error == 'NotRegistered')
                 {
-                    $ids = isset($this->details['to']) ? $this->details['to'] : $this->details['registration_ids'];
+                    $ids = isset($this->details['to']) ? [$this->details['to']] : $this->details['registration_ids'];
                     $delete_tokens[] = $ids[$key];
                 }
             }
