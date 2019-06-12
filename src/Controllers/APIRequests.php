@@ -124,17 +124,17 @@ trait APIRequests
 		}
 		// $table->save();
 		$this->update_transaction($request, $row, $parent);
-		$changed = $table->getChanges();
+		$changed = $row->getChanges();
 		$original = [];
 		foreach ($changed as $key => $value) {
 			$original[$key] = $original_all[$key];
 		}
-		$this->response->put('message', empty($changed) ? "Unchanged" : substr($table->getTable(), 0, -1) . " changed successfully");
+		$this->response->put('message', empty($changed) ? "Unchanged" : substr($row->getTable(), 0, -1) . " changed successfully");
 		$this->response->put('old', empty($changed) ? null : $original);
 		$this->response->put('changed', empty($changed) ? null : $changed);
-		$this->response->put('data', $table);
+		$this->response->put('data', $row);
 
-		$response = $this->response_update($request, $table, $parent, $original_all);
+		$response = $this->response_update($request, $row, $parent, $original_all);
 		return $this->response($this->response);
 	}
 
