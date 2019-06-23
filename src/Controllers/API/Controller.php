@@ -14,6 +14,20 @@ class Controller extends BaseController {
 
 	public function __construct()
 	{
+		if(in_array('auth:api', \Route::current()->middleware()))
+		{
+			$this->middleware(function ($request, $next) {
+				if($request->user()->tokenCan('dev'))
+				{
+					\Config::set('database.connections.mysql.database', config('database.connections.test.database'));
+					\Config::set('database.connections.mysql.username', config('database.connections.test.username'));
+					\Config::set('database.connections.mysql.password', config('database.connections.test.password'));
+        			\DB::reconnect('mysql');
+				}
+				return $next($request);
+			});
+		}
+
 		if(!isset($this->table))
 		{
 			preg_match("#\\\([^\\\]*[^s])s?Controller$#", get_class($this), $model_name);
