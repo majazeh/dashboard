@@ -59,6 +59,34 @@ class LoginController extends AuthController
 		return $this->auth_login($request);
 	}
 
+	protected function attemptLogin(Request $request)
+    {
+        $username = $request->input($this->username_method);
+		if(substr($username, 0, 1) == '.')
+        {
+            $request->request->add([$this->username_method => substr($username, 1)]);
+            \Config::set('database.connections._mysql.database', config('database.connections.mysql.database'));
+            \Config::set('database.connections._mysql.username', config('database.connections.mysql.username'));
+            \Config::set('database.connections._mysql.password', config('database.connections.mysql.password'));
+            \Config::set('database.connections.mysql.database', config('database.connections.test.database'));
+            \Config::set('database.connections.mysql.username', config('database.connections.test.username'));
+            \Config::set('database.connections.mysql.password', config('database.connections.test.password'));
+            \DB::reconnect('mysql');
+		}
+		else if($request->session()->get('dev'))
+		{
+			$request->session()->forget('dev');
+		}
+		$guard = $this->guard()->attempt(
+			$this->credentials($request), $request->filled('remember')
+		);
+		if($guard && substr($username, 0, 1) == '.')
+		{
+			$request->session()->put('dev', true);
+		}
+		return $guard;
+    }
+
 	/**
 	 * @return username field in html form
 	 */

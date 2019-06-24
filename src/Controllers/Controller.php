@@ -21,6 +21,19 @@ class Controller extends BaseController
     ];
     public function __construct(Request $request)
     {
+        if(in_array('auth', \Route::current()->middleware()))
+		{
+			$this->middleware(function ($request, $next) {
+				if($request->session()->get('dev'))
+				{
+					\Config::set('database.connections.mysql.database', config('database.connections.test.database'));
+					\Config::set('database.connections.mysql.username', config('database.connections.test.username'));
+					\Config::set('database.connections.mysql.password', config('database.connections.test.password'));
+        			\DB::reconnect('mysql');
+				}
+				return $next($request);
+			});
+		}
         if(!\Route::getCurrentRoute()) return;
         if(!isset($this->table))
 		{
