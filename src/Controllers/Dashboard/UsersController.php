@@ -44,8 +44,16 @@ class UsersController extends Controller
 			case 'show' :
 				return \Auth::guardio('user.view|user.create|user.edit');
 				break;
-			case 'create' :
-				return \Auth::guardio('user.create');
+            case 'create' :
+                if(!\Auth::guardio('user.create'))
+                {
+                    return false;
+                }
+                if(in_array($request->type, config('guardio.admins', ['admin', 'supervisor'])) && (!\Auth::guardio('change.type.all') || !\Auth::guardio('change.type.nadmin')))
+                {
+                    return false;
+                }
+                return true;
 				break;
             case 'edit' :
 				return \Auth::guardio('user.edit|user.create') || \Auth::id() == $args[0];
