@@ -5,12 +5,7 @@
     @include('dashboard.layouts.header')
 </head>
 
-@section('body-tag')
-    <body class="d-flex rtl{{isset($module->bodyClass) ? ' '. join(' ', $module->bodyClass) : ''}}">
-        @section('body')
-            @include('dashboard.layouts.body')
-        @show
-    </body>
-@show
+@include('dashboard.layouts.body-options')
+@include('dashboard.layouts.body-tag')
 
 </html>
