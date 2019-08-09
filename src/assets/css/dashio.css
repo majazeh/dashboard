@@ -187,8 +187,7 @@ Author URI: https://majazeh.ir
   src: url("../fonts/SallaArabic/Salla-Arabic-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/SallaArabic/Salla-Arabic-Regular.woff2") format("woff2"), url("../fonts/SallaArabic/Salla-Arabic-Regular.woff") format("woff"), url("../fonts/SallaArabic/Salla-Arabic-Regular.ttf") format("truetype"); }
 
 html {
-  overflow-x: hidden;
-  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   height: 100%; }
 
 body {
@@ -494,10 +493,10 @@ body[data-page="login"], body[data-page="register"] {
     width: 270px; } }
 
 .branding {
-  background-color: rgba(0, 0, 0, 0.125);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  background-color: rgba(0, 0, 0, 0.125);
   height: 55px;
   min-height: 55px;
   max-height: 55px;
@@ -508,13 +507,17 @@ body[data-page="login"], body[data-page="register"] {
   .branding .branding-title {
     color: #a5b9d0;
     font-size: 1rem;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 0px;
     flex: 1 1 0;
     min-width: 0;
+    -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     padding: 0 .25rem; }
     .branding .branding-title div {
+      -o-text-overflow: ellipsis;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap; }
