@@ -37,7 +37,8 @@ class RegisterController extends AuthController
 
     public function register(Request $request)
     {
-        if(!config('auth.enter.register', true))
+		$UserModel = config('auth.providers.users.model');
+        if(!config('auth.enter.register', true) && !$UserModel::count())
 		{
 			throw ValidationException::withMessages([
 					$this->username_method() => [_d('auth.register.disabled')],

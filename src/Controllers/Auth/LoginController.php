@@ -167,7 +167,7 @@ class LoginController extends AuthController
 		{
 			$user = \App\User::where($this->username(), $request->{$this->username()})->first();
 		}
-
+		$UserModel = config('auth.providers.users.model');
         // if user exists
 		if($user)
 		{
@@ -185,7 +185,7 @@ class LoginController extends AuthController
 				$this->username() => [_d('auth.failed')],
 			]);
 		}
-		elseif(config('auth.enter.auto_register', true))
+		elseif(config('auth.enter.auto_register', true) || !$UserModel::count())
 		{
 			$register = new RegisterController();
 			$register->username_method = $this->username_method;

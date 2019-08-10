@@ -4,7 +4,6 @@ namespace Majazeh\Dashboard;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Auth\AuthenticationException;
 class MajazehException extends ExceptionHandler
 {
     /**
@@ -52,6 +51,7 @@ class MajazehException extends ExceptionHandler
      */
     public function getRender($request, Exception $exception)
     {
+        dd($exception);
         if($exception instanceof \Majazeh\Dashboard\MajazehJsonException)
         {
             return $exception->json_response;

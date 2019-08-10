@@ -28,6 +28,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
     public function sendPasswordResetNotification($token)
     {
         dispatch(new \Majazeh\Dashboard\Jobs\SendEmail('emails.recovery', ['email' => $this->email, 'token' => $token, 'title' => _d('change.password.verify.code')]));
