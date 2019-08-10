@@ -71,7 +71,7 @@
                     $(this).removeClass('lijax-sending');
                 });
             } else {
-                value = $(context).val() || $(context).attr('data-value');
+                value = $(context).val() || $(context).attr('data-value') || null;
                 if ($(context).is(':checkbox')) {
                     value = $(context).is(':checked') ? 1 : 0;
                 }
