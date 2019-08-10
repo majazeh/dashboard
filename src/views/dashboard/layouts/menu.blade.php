@@ -24,6 +24,13 @@
                     <span>{{ _d('Users') }}</span>
                 </a>
             @endif
+
+            @if (\Auth::guardio('larators'))
+                <a class="d-flex align-items-center menu-item" href="{{ route('dashboard.larators.index') }}">
+                    <i class="fas fa-users"></i>
+                    <span>{{ _d('dashboard.larators') }}</span>
+                </a>
+            @endif
         @show
     </div>
 </div>

@@ -4,6 +4,10 @@ function _d($text, $args = []){
 	$trans = __("$text");
 	if(is_string($trans))
 	{
+		if($trans == $text)
+		{
+			$trans = \Majazeh\Dashboard\Controllers\Dashboard\LaratorController::checkOrSave($text);
+		}
 		return $trans == $text ? $text : $trans;
 	}
 	return $text;

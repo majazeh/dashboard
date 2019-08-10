@@ -9,4 +9,6 @@ Route::resource('guards', '\Majazeh\Dashboard\Controllers\Dashboard\GuardsContro
 
 Route::resource('notifications', '\Majazeh\Dashboard\Controllers\Dashboard\NotificationsController', ['as' => 'dashboard']);
 
+Route::resource('larators', config('services.larator', '\Majazeh\Dashboard\Controllers\Dashboard\LaratorController'), ['as' => 'dashboard']);
+
 ?>
