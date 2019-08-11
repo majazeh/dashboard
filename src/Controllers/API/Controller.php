@@ -14,7 +14,7 @@ class Controller extends BaseController {
 
 	public function __construct()
 	{
-		if(in_array('auth:api', \Route::current()->middleware()))
+		if(method_exists(\Route::current(), 'middleware') && in_array('auth:api', \Route::current()->middleware()))
 		{
 			$this->middleware(function ($request, $next) {
 				if($request->user()->tokenCan('dev'))

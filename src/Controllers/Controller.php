@@ -21,7 +21,7 @@ class Controller extends BaseController
     ];
     public function __construct(Request $request)
     {
-        if(in_array('auth', \Route::current()->middleware()))
+        if(method_exists(\Route::current(), 'middleware') && in_array('auth', \Route::current()->middleware()))
 		{
 			$this->middleware(function ($request, $next) {
 				if($request->session()->get('dev'))
