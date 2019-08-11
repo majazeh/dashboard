@@ -25,6 +25,13 @@
                 </a>
             @endif
 
+            @if (\Auth::guardio('guardio.view|guardio.create|guardio.edit|guardio.delete'))
+                <a class="d-flex align-items-center menu-item" href="{{ route('dashboard.guards.index') }}">
+                    <i class="fas fa-users"></i>
+                    <span>{{ _d('Guards') }}</span>
+                </a>
+            @endif
+
             @if (\Auth::guardio('larators'))
                 <a class="d-flex align-items-center menu-item" href="{{ route('dashboard.larators.index') }}">
                     <i class="fas fa-users"></i>
