@@ -132,9 +132,14 @@ trait Requests
 		$return = [
 			'message' => $this->table . ' deleted',
 		];
-		if(\Route::has("{$this->resource}.index", $parent ?: null))
+		$route = ["{$this->resource}.index"];
+		if($parent)
 		{
-			$return['redirect'] = route("{$this->resource}.index", $parent ?: null);
+			$route[] = $parent;
+		}
+		if(\Route::has(...$route))
+		{
+			$return['redirect'] = route(...$route);
 		}
 		return $return;
 	}
