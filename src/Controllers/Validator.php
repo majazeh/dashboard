@@ -21,7 +21,7 @@ trait Validator
 			foreach ($this->fields($request, $update) as $key => $value) {
 				if($value && $request->has($key))
 				{
-					$inputs[$key] = $request->input($key);
+					$inputs[$key] = $request->$key;
 				}
 			}
 			return $inputs;
