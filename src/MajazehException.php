@@ -51,7 +51,6 @@ class MajazehException extends ExceptionHandler
      */
     public function getRender($request, Exception $exception)
     {
-        dd($exception);
         if($exception instanceof \Majazeh\Dashboard\MajazehJsonException)
         {
             return $exception->json_response;

@@ -13,7 +13,6 @@ trait APIRequests
 			$parent = $this->getParent()::findOrFail($parent);
 			$this->response->put(strtolower($this->parent), $parent);
 		}
-		$list_name = strtolower(str_plural($this->table));
 		$model = $this->index_query($request, $parent ?: null);
 		if($request->q)
 		{

@@ -139,7 +139,13 @@ trait Requests
 		}
 		if(\Route::has(...$route))
 		{
-			$return['redirect'] = route(...$route);
+			try{
+				$return['redirect'] = route(...$route);
+			}
+			catch(\Exception $e)
+			{
+
+			}
 		}
 		return $return;
 	}
