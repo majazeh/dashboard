@@ -123,9 +123,14 @@ trait Requests
 			$this->getParent()::findOrFail($parent);
 		}
 		$table = $this->show_query($request, $id, $parent);
-		$table->delete();
+		$this->destroy_transaction($request, $table, $parent);
 		$response = $this->response_destroy($request, $table, $parent);
 		return $this->response($response);
+	}
+
+	public function destroy_transaction($request, $row, &$parent = null)
+	{
+		return $row->delete();
 	}
 	public function response_destroy($request, $id, $parent)
 	{
