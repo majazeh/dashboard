@@ -21,6 +21,14 @@ class APIController extends BaseController
 			preg_match("#\\\([^\\\]*[^s])s?Controller$#", get_class($this), $model_name);
 			$this->table = $model_name[1];
 		}
+
+		if (!isset($this->resource)) {
+			$this->resource = "\App\Http\Resources\\$this->table";
+		}
+		if (!isset($this->resource_collection)) {
+			$this->resource_collection = "\App\Http\Resources\\" . str_plural($this->table);
+		}
+
 		$this->response = collect(['message' => ':)']);
 		$this->status = 200;
 	}

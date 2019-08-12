@@ -91,6 +91,10 @@ class AuthController extends Controller
 			$_data['name'] = 'Admin';
 			$_data['status'] = 'active';
 		}
+		if(config('auth.enter.auto_verify'))
+		{
+			$_data['status'] = 'active';
+		}
 		if(!empty($_data))
 		{
 			foreach ($_data as $key => $value) {

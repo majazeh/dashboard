@@ -18,8 +18,18 @@ trait APIRequests
 		{
 			$this->fast_search($request, $model);
 		}
-		$this->response = $this->response->merge($this->paginate_order($request, $model, isset($this->ordering) ? $this->ordering : ['id']));
-		return $this->response($this->response);
+		$list = $this->paginate_order($request, $model, isset($this->ordering) ? $this->ordering : ['id']);
+		if (class_exists($this->resource_collection))
+		{
+			$list = new $this->resource_collection($list);
+			$list->additional([
+				'is_ok' => true,
+				'message' => ':)',
+				'message_text' => ':)',
+			]);
+			return $list;
+		}
+		return $this->response($list);
 	}
 
 	public function index_query($request, $parent = null)
@@ -41,7 +51,11 @@ trait APIRequests
 			$parent = $this->getParent()::findOrFail($parent);
 			$this->response->put(strtolower($this->parent), $parent);
 		}
+
 		$table = $this->show_query($request, $id, $parent);
+		if (class_exists($this->resource)) {
+			$table = new $this->resource($table);
+		}
 		$this->response->put('data', $table);
 		return $this->response($this->response);
 	}
