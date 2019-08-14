@@ -11,7 +11,7 @@ trait Requests
 		$parent = isset($this->parent) && isset(func_get_args()[1]) ? func_get_args()[1] : null;
 		if($parent)
 		{
-			$parent = $this->getParent()::findOrFail($parent);
+			$parent = $this->findOrFail($parent, $this->getParent());
 			\Data::set(strtolower($this->parent), $parent);
 		}
 		$list_name = strtolower(str_plural($this->table));
@@ -71,7 +71,7 @@ trait Requests
 		$parent = isset($this->parent) && isset(func_get_args()[1]) ? func_get_args()[1] : null;
 		if($parent)
 		{
-			$parent = $this->getParent()::findOrFail($parent);
+			$parent = $this->findOrFail($parent, $this->getParent());
 			\Data::set(strtolower($this->parent), $parent);
 		}
 		return $this->create_view($request, $parent, ...array_splice($args, 2));
@@ -161,7 +161,7 @@ trait Requests
 		$parent = isset($this->parent) && isset(func_get_args()[1]) ? func_get_args()[1] : null;
 		if($parent)
 		{
-			$parent = $this->getParent()::findOrFail($parent);
+			$parent = $this->findOrFail($parent, $this->getParent());
 		}
 		$this->validator($request, false, $parent)->validate();
         $this->validated($request, false, $parent);

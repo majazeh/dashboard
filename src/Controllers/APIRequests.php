@@ -10,8 +10,12 @@ trait APIRequests
 		$parent = isset($this->parent) && isset(func_get_args()[1]) ? func_get_args()[1] : null;
 		if($parent)
 		{
-			$parent = $this->getParent()::findOrFail($parent);
-			$this->response->put(strtolower($this->parent), $parent);
+			$parent = $this->findOrFail($parent, $this->getParent());
+			$parent_result = $parent;
+			if (isset($this->parent_resource)) {
+				$parent_result = new $this->parent_resource($parent_result);
+			}
+			$this->response->put(strtolower($this->parent), $parent_result);
 		}
 		$model = $this->index_query($request, $parent ?: null);
 		if($request->q)
@@ -48,8 +52,12 @@ trait APIRequests
 		}
 		if($parent)
 		{
-			$parent = $this->getParent()::findOrFail($parent);
-			$this->response->put(strtolower($this->parent), $parent);
+			$parent = $this->findOrFail($parent, $this->getParent());
+			$parent_result = $parent;
+			if (isset($this->parent_resource)) {
+				$parent_result = new $this->parent_resource($parent_result);
+			}
+			$this->response->put(strtolower($this->parent), $parent_result);
 		}
 
 		$table = $this->show_query($request, $id, $parent);
@@ -76,8 +84,12 @@ trait APIRequests
 		}
 		if($parent)
 		{
-			$parent = $this->getParent()::findOrFail($parent);
-			$this->response->put(strtolower($this->parent), $parent);
+			$parent = $this->findOrFail($parent, $this->getParent());
+			$parent_result = $parent;
+			if (isset($this->parent_resource)) {
+				$parent_result = new $this->parent_resource($parent_result);
+			}
+			$this->response->put(strtolower($this->parent), $parent_result);
 		}
 		$table = $this->show_query($request, $id, $parent);
 		$table->delete();
@@ -91,8 +103,13 @@ trait APIRequests
 		$parent = isset($this->parent) && isset(func_get_args()[1]) ? func_get_args()[1] : null;
 		if($parent)
 		{
-			$parent = $this->getParent()::findOrFail($parent);
-			$this->response->put(strtolower($this->parent), $parent);
+			$parent = $this->findOrFail($parent, $this->getParent());
+			$parent_result = $parent;
+			if(isset($this->parent_resource))
+			{
+				$parent_result = new $this->parent_resource($parent_result);
+			}
+			$this->response->put(strtolower($this->parent), $parent_result);
 		}
 		$this->validator($request, false, $parent)->validate();
 		$this->validated($request, false, $parent);
@@ -106,6 +123,9 @@ trait APIRequests
 		// $create = $this->get_model()::create($data);
 		$create = $this->store_transaction($request, $data, $parent);
 		$this->response->put('message', $this->table . " created successfully");
+		if (isset($this->resource)) {
+			$create = new $this->resource($create);
+		}
 		$this->response->put('data', $create);
 		return $this->response($this->response);
 	}
@@ -125,8 +145,12 @@ trait APIRequests
 		}
 		if($parent)
 		{
-			$parent = $this->getParent()::findOrFail($parent);
-			$this->response->put(strtolower($this->parent), $parent);
+			$parent = $this->findOrFail($parent, $this->getParent());
+			$parent_result = $parent;
+			if (isset($this->parent_resource)) {
+				$parent_result = new $this->parent_resource($parent_result);
+			}
+			$this->response->put(strtolower($this->parent), $parent_result);
 		}
 		$row = $this->show_query($request, $id, $parent);
 		$this->validator($request, $row, $parent)->validate();
@@ -145,6 +169,9 @@ trait APIRequests
 		$this->response->put('message', empty($changed) ? "Unchanged" : substr($row->getTable(), 0, -1) . " changed successfully");
 		$this->response->put('old', empty($changed) ? null : $original);
 		$this->response->put('changed', empty($changed) ? null : $changed);
+		if (isset($this->resource)) {
+			$row = new $this->resource($row);
+		}
 		$this->response->put('data', $row);
 
 		$response = $this->response_update($request, $row, $parent, $original_all);

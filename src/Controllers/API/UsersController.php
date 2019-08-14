@@ -13,6 +13,10 @@ class UsersController extends Controller{
 	public function login(Request $request)
 	{
 		$this->username_method($request);
+		if(!\App\User::where($this->username_method, $request->input($this->username_method))->first() && config('auth.enter.auto_register'))
+		{
+			return $this->register($request);
+		}
 		if(\Auth::attempt(
 			[
 				$this->username_method => $request->input($this->username_method),
@@ -33,17 +37,26 @@ class UsersController extends Controller{
 
 	public function register(Request $request)
 	{
-		$user = User::where('email', $request->input('username'))->first();
+		$this->username_method($request);
+		$user = User::where($this->username_method, $request->input($this->username_method))->first();
 		if($user)
 		{
 			return $this->response("user duplicated", null, 401);
 		}
 		$register = new User;
 		$register->password = Hash::make($request->input('password'));
-		$register->email = $request->input('username');
-		$register->status = 'active';
+		$register->{$this->username_method} = $request->input($this->username_method);
+
+		if(config('auth.enter.auto_verify'))
+		{
+			$register->status = 'active';
+		}
 		$register->type = 'user';
 		$register->save();
+		if (config('auth.enter.auto_verify'))
+		{
+			return $this->login($request);
+		}
 		return $this->response("registered", $register);
 	}
 
