@@ -22,10 +22,10 @@ class APIController extends BaseController
 			$this->table = $model_name[1];
 		}
 
-		if (!isset($this->resource)) {
+		if (!isset($this->resource) && class_exists("\App\Http\Resources\\$this->table")) {
 			$this->resource = "\App\Http\Resources\\$this->table";
 		}
-		if (!isset($this->resource_collection)) {
+		if (!isset($this->resource_collection) && class_exists("\App\Http\Resources\\" . str_plural($this->table))) {
 			$this->resource_collection = "\App\Http\Resources\\" . str_plural($this->table);
 		}
 
