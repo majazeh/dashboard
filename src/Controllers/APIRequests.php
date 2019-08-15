@@ -10,7 +10,7 @@ trait APIRequests
 		$parent = isset($this->parent) && isset(func_get_args()[1]) ? func_get_args()[1] : null;
 		if($parent)
 		{
-			$parent = $this->findOrFail($parent, $this->getParent());
+			$parent = $this->findOrFail($parent, $this->parent);
 			$parent_result = $parent;
 			if (isset($this->parent_resource)) {
 				$parent_result = new $this->parent_resource($parent_result);
@@ -58,7 +58,7 @@ trait APIRequests
 		}
 		if($parent)
 		{
-			$parent = $this->findOrFail($parent, $this->getParent());
+			$parent = $this->findOrFail($parent, $this->parent);
 			$parent_result = $parent;
 			if (isset($this->parent_resource)) {
 				$parent_result = new $this->parent_resource($parent_result);
@@ -90,7 +90,7 @@ trait APIRequests
 		}
 		if($parent)
 		{
-			$parent = $this->findOrFail($parent, $this->getParent());
+			$parent = $this->findOrFail($parent, $this->parent);
 			$parent_result = $parent;
 			if (isset($this->parent_resource)) {
 				$parent_result = new $this->parent_resource($parent_result);
@@ -113,7 +113,7 @@ trait APIRequests
 		$parent = isset($this->parent) && isset(func_get_args()[1]) ? func_get_args()[1] : null;
 		if($parent)
 		{
-			$parent = $this->findOrFail($parent, $this->getParent());
+			$parent = $this->findOrFail($parent, $this->parent);
 			$parent_result = $parent;
 			if(isset($this->parent_resource))
 			{
@@ -155,7 +155,7 @@ trait APIRequests
 		}
 		if($parent)
 		{
-			$parent = $this->findOrFail($parent, $this->getParent());
+			$parent = $this->findOrFail($parent, $this->parent);
 			$parent_result = $parent;
 			if (isset($this->parent_resource)) {
 				$parent_result = new $this->parent_resource($parent_result);
