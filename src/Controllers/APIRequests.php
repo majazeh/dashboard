@@ -31,6 +31,12 @@ trait APIRequests
 				'message' => ':)',
 				'message_text' => ':)',
 			]);
+			if($parent)
+			{
+				$list->additional([
+					strtolower($this->parent) => $parent_result
+				]);
+			}
 			return $list;
 		}
 		return $this->response($list);
@@ -92,9 +98,13 @@ trait APIRequests
 			$this->response->put(strtolower($this->parent), $parent_result);
 		}
 		$table = $this->show_query($request, $id, $parent);
-		$table->delete();
+		$this->destroy_transaction($request, $table, $parent);
 		$this->response->put('message', $this->table . ' deleted');
 		return $this->response($this->response);
+	}
+	public function destroy_transaction($request, $row, &$parent = null)
+	{
+		return $row->delete();
 	}
 
 	public function store(Request $request)
