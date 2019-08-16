@@ -20,6 +20,12 @@ class User extends Authenticatable
         'id', 'remember_token', 'created_at', 'updated_at'
     ];
 
+
+    use Traits\Serial;
+    public static $s_prefix = 'IQ';
+    public static $s_start = 24300000;
+    public static $s_end = 728999999;
+
     /**
      * The attributes that should be hidden for arrays.
      *
