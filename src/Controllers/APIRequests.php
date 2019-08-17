@@ -174,7 +174,14 @@ trait APIRequests
 		$changed = $row->getChanges();
 		$original = [];
 		foreach ($changed as $key => $value) {
-			$original[$key] = $original_all[$key];
+			if(isset($original_all[$key]))
+			{
+				$original[$key] = $original_all[$key];
+			}
+			else
+			{
+				unset($changed[$key]);
+			}
 		}
 		$this->response->put('message', empty($changed) ? "Unchanged" : substr($row->getTable(), 0, -1) . " changed successfully");
 		$this->response->put('old', empty($changed) ? null : $original);
@@ -197,7 +204,13 @@ trait APIRequests
 		$changed = $table->getChanges();
 		$original = [];
 		foreach ($changed as $key => $value) {
-			$original[$key] = $original_all[$key];
+			if (isset($original_all[$key])) {
+				$original[$key] = $original_all[$key];
+			}
+			else
+			{
+				unset($changed[$key]);
+			}
 		}
 		$return = [
 			'message' => empty($changed) ? "Unchanged" : substr($table->getTable(), 0, -1) . " changed successfully",
