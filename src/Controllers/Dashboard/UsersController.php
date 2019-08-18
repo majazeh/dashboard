@@ -149,7 +149,7 @@ class UsersController extends Controller
         $this->access_check('edit', ...func_get_args());
         $user = config('auth.providers.users.model')::findOrfail($user);
         \Data::set('user', $user);
-        \Data::set('id', $user->id);
+        \Data::set('id', $user->serial);
         \Data::set('userTypes', $this->user_types());
         \Data::set('userStatus', $this->user_status());
         return $this->view($this->templates['create']);
@@ -201,11 +201,15 @@ class UsersController extends Controller
 
 
     public function user_types(){
-        return [
-            'admin' => _d('type.admin'),
-            'guest' => _d('type.guest'),
-            'user' => _d('type.user')
-        ];
+        $type =  config('guardio.types', [
+            'admin' => 'type.admin',
+            'guest' => 'type.guest',
+            'user' => 'type.user'
+        ]);
+        foreach ($type as $key => $value) {
+            $type[$key] = _d($value);
+        }
+        return $type;
     }
 
     public function user_status(){
