@@ -17,11 +17,7 @@ class UsersController extends Controller{
 		{
 			return $this->register($request);
 		}
-		if(\Auth::attempt(
-			[
-				$this->username_method => $request->input($this->username_method),
-				'password' => $request->input('password')
-			])){
+		if(\Auth::attempt($this->attempt_rule($request))){
 			$user = \Auth::user();
 			if($user->status != 'active')
 			{
@@ -33,6 +29,14 @@ class UsersController extends Controller{
 		else{
 			return $this->response('Unauthorised', null, 401);
 		}
+	}
+
+	public function attempt_rule(Request $request)
+	{
+		return [
+			$this->username_method => $request->input($this->username_method),
+			'password' => $request->input('password')
+		];
 	}
 
 	public function register(Request $request)
