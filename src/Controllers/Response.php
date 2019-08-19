@@ -21,7 +21,7 @@ trait Response
 		{
 			$response['data'] = $data;
 		}
-		$response['message'] = str_replace(" ", "_", strtoupper($response['message']));
+		$response['message'] = _d(str_replace(" ", "_", strtoupper($response['message'])));
 		if($code != 200)
 		{
 			$response['is_ok'] = false;
