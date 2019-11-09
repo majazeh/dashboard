@@ -149,7 +149,7 @@ class UsersController extends Controller
         $this->access_check('edit', ...func_get_args());
         $user = config('auth.providers.users.model')::findOrfail($user);
         \Data::set('user', $user);
-        \Data::set('id', $user->serial);
+        \Data::set('id', $user->serial ?: $user->id);
         \Data::set('userTypes', $this->user_types());
         \Data::set('userStatus', $this->user_status());
         return $this->view($this->templates['create']);
