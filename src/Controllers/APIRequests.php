@@ -23,7 +23,7 @@ trait APIRequests
 			$this->fast_search($request, $model);
 		}
 		$list = $this->paginate_order($request, $model, isset($this->ordering) ? $this->ordering : ['id']);
-		if (class_exists($this->resource_collection))
+		if (isset($this->resource_collection) && class_exists($this->resource_collection))
 		{
 			$list = new $this->resource_collection($list);
 			$list->additional([
