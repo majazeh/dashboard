@@ -67,7 +67,7 @@ trait APIRequests
 		}
 
 		$table = $this->show_query($request, $id, $parent);
-		if (class_exists($this->resource)) {
+		if (isset($this->resource) && class_exists($this->resource)) {
 			$table = new $this->resource($table);
 		}
 		$this->response->put('data', $table);
