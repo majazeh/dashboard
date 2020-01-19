@@ -30,7 +30,7 @@ trait Extensions
 
 		public function findOrFail($id, $model_name = null)
 		{
-			$model = $model_name ? '\App\\' . (is_string($model_name) ? $model_name : $model_name->getModel()->getTable()) : $this->get_model();
+            $model = $model_name ? (substr($model_name, 0, 5) == '\App\\' ? $model_name : '\App\\' . (is_string($model_name) ? $model_name : $model_name->getModel()->getTable())) : $this->get_model();
 			$model_name = $model_name ?: $this->table;
 			if(is_null($id))
 			{
